@@ -33,14 +33,18 @@ export function HrPage() {
             onClick={() => setTab(tb)}
             className={cn(
               "rounded-full px-3 py-1.5 text-[12px] font-semibold transition",
-              tab === tb ? "bg-foreground text-background" : "glass text-muted-foreground shadow-none",
+              tab === tb
+                ? "bg-foreground text-background"
+                : "glass text-muted-foreground shadow-none",
             )}
           >
             {t.hr.tabs[tb]}
           </button>
         ))}
       </div>
-      {tab === "progress" && <ProgressTable people={people} assignments={assignments} emptyMessage={t.hr.noEmployees} />}
+      {tab === "progress" && (
+        <ProgressTable people={people} assignments={assignments} emptyMessage={t.hr.noEmployees} />
+      )}
       {tab === "library" && <LibraryPanel />}
       {tab === "people" && <PeoplePanel />}
     </section>

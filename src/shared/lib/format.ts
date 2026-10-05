@@ -25,7 +25,10 @@ export function courseLabel(pct: number, minutes: number, lang: Lang = "et"): st
 }
 
 export function shortDate(date: string, lang: Lang = "et"): string {
-  return new Date(date + "T00:00:00").toLocaleDateString(LOCALES[lang], { day: "numeric", month: "short" });
+  return new Date(date + "T00:00:00").toLocaleDateString(LOCALES[lang], {
+    day: "numeric",
+    month: "short",
+  });
 }
 
 export function dueLabel(date: string | null, lang: Lang = "et"): string {
@@ -55,7 +58,10 @@ export function telHref(phone: string): string {
 export type PlanGroupKey = "overdue" | "week" | "none";
 
 /** Groups items into Overdue, This week, Next week, Week of …, No due date. */
-export function groupByWeek<T extends { due_date: string | null; progress: number }>(items: T[], lang: Lang = "et") {
+export function groupByWeek<T extends { due_date: string | null; progress: number }>(
+  items: T[],
+  lang: Lang = "et",
+) {
   const d = DICTS[lang];
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -66,19 +72,29 @@ export function groupByWeek<T extends { due_date: string | null; progress: numbe
     return m;
   };
   const thisWeek = monday(today).getTime();
-  const groups = new Map<string, { key: string; label: string; tone: PlanGroupKey; sort: number; items: T[] }>();
+  const groups = new Map<
+    string,
+    { key: string; label: string; tone: PlanGroupKey; sort: number; items: T[] }
+  >();
   const add = (key: string, label: string, tone: PlanGroupKey, sort: number, item: T) => {
     if (!groups.has(key)) groups.set(key, { key, label, tone, sort, items: [] });
     groups.get(key)!.items.push(item);
   };
   for (const item of items) {
     if (!item.due_date) add("none", d.common.noDue, "none", Infinity, item);
-    else if (isOverdue(item.due_date, item.progress)) add("overdue", d.common.overdue, "overdue", -Infinity, item);
+    else if (isOverdue(item.due_date, item.progress))
+      add("overdue", d.common.overdue, "overdue", -Infinity, item);
     else {
       const wk = monday(new Date(item.due_date + "T00:00:00")).getTime();
       const diff = Math.round((wk - thisWeek) / (7 * 864e5));
       const label =
-        diff <= 0 ? d.weeks.thisWeek : diff === 1 ? d.weeks.nextWeek : d.weeks.weekOf(new Date(wk).toLocaleDateString(LOCALES[lang], { day: "numeric", month: "short" }));
+        diff <= 0
+          ? d.weeks.thisWeek
+          : diff === 1
+            ? d.weeks.nextWeek
+            : d.weeks.weekOf(
+                new Date(wk).toLocaleDateString(LOCALES[lang], { day: "numeric", month: "short" }),
+              );
       add(`w${wk}`, label, "week", wk, item);
     }
   }

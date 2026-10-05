@@ -22,11 +22,18 @@ export function ProgressTable({ people, assignments, emptyMessage }: ProgressTab
     <>
       <div className="glass overflow-hidden rounded-2xl">
         {people.map((person) => {
-          const personAssignments = assignments.filter((assignment) => assignment.user_id === person.id);
+          const personAssignments = assignments.filter(
+            (assignment) => assignment.user_id === person.id,
+          );
           const summary = summarize(personAssignments);
-          const overdueCount = personAssignments.filter((assignment) => isOverdue(assignment.due_date, assignment.progress)).length;
+          const overdueCount = personAssignments.filter((assignment) =>
+            isOverdue(assignment.due_date, assignment.progress),
+          ).length;
           return (
-            <div key={person.id} className="flex flex-wrap items-center gap-4 border-b border-border px-5 py-4 last:border-0">
+            <div
+              key={person.id}
+              className="flex flex-wrap items-center gap-4 border-b border-border px-5 py-4 last:border-0"
+            >
               <div className="grid size-9 shrink-0 place-items-center rounded-xl bg-accent text-[12px] font-bold text-accent-foreground">
                 {initials(person.full_name || person.email)}
               </div>
@@ -38,7 +45,9 @@ export function ProgressTable({ people, assignments, emptyMessage }: ProgressTab
                 <ProgressBar pct={summary.pct} />
                 <div className="mt-1 text-[11px] text-muted-foreground">
                   {t.progress.doneOf(summary.done, summary.total)}
-                  {overdueCount > 0 && <span className="text-destructive"> · {t.progress.overdue(overdueCount)}</span>}
+                  {overdueCount > 0 && (
+                    <span className="text-destructive"> · {t.progress.overdue(overdueCount)}</span>
+                  )}
                 </div>
               </div>
               <Link

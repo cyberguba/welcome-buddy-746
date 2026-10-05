@@ -11,7 +11,10 @@ interface SectionLinkCardProps {
 
 export function SectionLinkCard({ title, meta, to, cta, pct }: SectionLinkCardProps) {
   return (
-    <Link to={to} className="glass animate-rise group block rounded-2xl p-5 transition hover:bg-card">
+    <Link
+      to={to}
+      className="glass animate-rise group block rounded-2xl p-5 transition hover:bg-card"
+    >
       <div className="font-display text-[15px] font-bold">{title}</div>
       <div className="mt-1 text-[12px] font-medium text-muted-foreground">{meta}</div>
       {pct !== undefined && (

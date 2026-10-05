@@ -20,7 +20,10 @@ export function CoursesPage() {
 
   return (
     <section className="mt-7">
-      <SectionHeader title={t.courses.title} meta={t.common.completedOf(totals.coursesDone, totals.coursesTotal)} />
+      <SectionHeader
+        title={t.courses.title}
+        meta={t.common.completedOf(totals.coursesDone, totals.coursesTotal)}
+      />
       <StatusFilterBar value={filter} onChange={setFilter} />
       <div className="grid gap-4 md:grid-cols-3">
         {visible.map((a) => (

@@ -5,7 +5,8 @@ import { pageMeta } from "@/shared/lib/seo";
 
 export const Route = createFileRoute("/_authenticated/plan")({
   validateSearch: z.object({ user: z.string().optional() }),
-  head: () => pageMeta("Sisseelamisplaan", "Sinu kogu Postimehe sisseelamise ajakava tähtaegade järgi."),
+  head: () =>
+    pageMeta("Sisseelamisplaan", "Sinu kogu Postimehe sisseelamise ajakava tähtaegade järgi."),
   component: PlanRoute,
 });
 

@@ -69,7 +69,10 @@ export const assignmentsQuery = (userId?: string) =>
   queryOptions({
     queryKey: ["assignments", userId ?? "visible"],
     queryFn: async () => {
-      let query = supabase.from("assignments").select("*, course:courses(*), document:documents(*)").order("due_date", { nullsFirst: false });
+      let query = supabase
+        .from("assignments")
+        .select("*, course:courses(*), document:documents(*)")
+        .order("due_date", { nullsFirst: false });
       if (userId) query = query.eq("user_id", userId);
       const { data, error } = await query;
       if (error) throw error;
@@ -80,7 +83,9 @@ export const assignmentsQuery = (userId?: string) =>
 /** Uploads a PDF to storage and returns its stored path. */
 export async function uploadDocumentPdf(file: File) {
   const path = `${crypto.randomUUID()}.pdf`;
-  const { error } = await supabase.storage.from("documents").upload(path, file, { contentType: "application/pdf" });
+  const { error } = await supabase.storage
+    .from("documents")
+    .upload(path, file, { contentType: "application/pdf" });
   if (error) throw error;
   return path;
 }

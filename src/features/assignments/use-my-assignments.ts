@@ -15,7 +15,10 @@ export function useUpdateProgress() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, progress }: { id: string; progress: number }) => {
-      const { error } = await supabase.from("assignments").update({ progress: Math.min(100, progress) }).eq("id", id);
+      const { error } = await supabase
+        .from("assignments")
+        .update({ progress: Math.min(100, progress) })
+        .eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["assignments"] }),

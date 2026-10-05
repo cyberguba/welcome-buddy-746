@@ -15,7 +15,9 @@ export function OverviewPage() {
   const { list, totals } = useMyAssignments();
   const nextDocument = list.find((a) => a.document && a.progress < 100);
   const nextCourse = list.find((a) => a.course && a.progress < 100);
-  const teams = CONTACTS.slice(0, 3).map((c) => c.team[lang]).join(", ");
+  const teams = CONTACTS.slice(0, 3)
+    .map((c) => c.team[lang])
+    .join(", ");
   const firstName = profile?.full_name.split(" ")[0] || t.overview.there;
 
   return (
@@ -29,7 +31,9 @@ export function OverviewPage() {
             {t.overview.title} <span className="text-primary">{firstName}.</span>
           </h1>
           <div className="mt-5 flex items-end justify-between">
-            <div className="font-display text-[36px] font-extrabold leading-none text-primary">{totals.pct}%</div>
+            <div className="font-display text-[36px] font-extrabold leading-none text-primary">
+              {totals.pct}%
+            </div>
             <div className="text-[12px] font-medium text-muted-foreground">
               {t.overview.itemsDone(totals.done, totals.total)}
             </div>
@@ -43,7 +47,10 @@ export function OverviewPage() {
           >
             {t.overview.continue}
           </Link>
-          <Link to="/plan" className="ml-3 inline-block text-[13px] font-semibold text-primary hover:underline">
+          <Link
+            to="/plan"
+            className="ml-3 inline-block text-[13px] font-semibold text-primary hover:underline"
+          >
             {t.overview.fullPlan}
           </Link>
         </div>
@@ -52,14 +59,24 @@ export function OverviewPage() {
           <div className="font-display text-[15px] font-bold">{t.overview.nextUp}</div>
           <div className="mt-4 space-y-3">
             {nextDocument?.document && (
-              <Link to="/documents" className="block rounded-2xl bg-card/70 p-4 ring-1 ring-border transition hover:ring-primary/30">
-                <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-warning">{t.common.document} · {dueLabel(nextDocument.due_date, lang)}</div>
+              <Link
+                to="/documents"
+                className="block rounded-2xl bg-card/70 p-4 ring-1 ring-border transition hover:ring-primary/30"
+              >
+                <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-warning">
+                  {t.common.document} · {dueLabel(nextDocument.due_date, lang)}
+                </div>
                 <div className="mt-1 text-[13px] font-semibold">{nextDocument.document.title}</div>
               </Link>
             )}
             {nextCourse?.course && (
-              <Link to="/courses" className="block rounded-2xl bg-accent p-4 ring-1 ring-primary/25">
-                <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">{t.common.course} · {dueLabel(nextCourse.due_date, lang)}</div>
+              <Link
+                to="/courses"
+                className="block rounded-2xl bg-accent p-4 ring-1 ring-primary/25"
+              >
+                <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">
+                  {t.common.course} · {dueLabel(nextCourse.due_date, lang)}
+                </div>
                 <div className="mt-1 text-[13px] font-semibold">{nextCourse.course.title}</div>
                 <div className="mt-1 text-[11px] font-medium text-muted-foreground">
                   {courseLabel(nextCourse.progress, nextCourse.course.minutes, lang)}
@@ -67,10 +84,14 @@ export function OverviewPage() {
               </Link>
             )}
             {totals.total === 0 && (
-              <div className="rounded-2xl bg-muted p-4 text-[13px] text-muted-foreground">{t.overview.nothing}</div>
+              <div className="rounded-2xl bg-muted p-4 text-[13px] text-muted-foreground">
+                {t.overview.nothing}
+              </div>
             )}
             {totals.total > 0 && !nextCourse && !nextDocument && (
-              <div className="rounded-2xl bg-success/15 p-4 text-[13px] font-semibold text-success">{t.overview.allDone}</div>
+              <div className="rounded-2xl bg-success/15 p-4 text-[13px] font-semibold text-success">
+                {t.overview.allDone}
+              </div>
             )}
           </div>
         </div>
@@ -91,7 +112,12 @@ export function OverviewPage() {
           to="/courses"
           cta={t.overview.openCourses}
         />
-        <SectionLinkCard title={t.nav.contacts} meta={t.overview.contactsMeta(CONTACTS.length, teams)} to="/contacts" cta={t.overview.openContacts} />
+        <SectionLinkCard
+          title={t.nav.contacts}
+          meta={t.overview.contactsMeta(CONTACTS.length, teams)}
+          to="/contacts"
+          cta={t.overview.openContacts}
+        />
       </section>
     </>
   );

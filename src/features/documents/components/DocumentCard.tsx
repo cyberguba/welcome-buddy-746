@@ -9,11 +9,21 @@ import { documentFileUrlQuery, type Assignment } from "@/shared/api/induction-ap
 function PdfViewer({ path }: { path: string }) {
   const { t } = useT();
   const { data: url, isLoading } = useQuery(documentFileUrlQuery(path));
-  if (isLoading || !url) return <div className="mt-4 text-[12px] text-muted-foreground">{t.documents.loadingPdf}</div>;
+  if (isLoading || !url)
+    return <div className="mt-4 text-[12px] text-muted-foreground">{t.documents.loadingPdf}</div>;
   return (
     <div className="mt-4 space-y-2">
-      <iframe src={url} title={t.documents.pdfTitle} className="h-[480px] w-full rounded-xl bg-card ring-1 ring-border" />
-      <a href={url} target="_blank" rel="noreferrer" className="text-[12px] font-semibold text-primary underline underline-offset-4">
+      <iframe
+        src={url}
+        title={t.documents.pdfTitle}
+        className="h-[480px] w-full rounded-xl bg-card ring-1 ring-border"
+      />
+      <a
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        className="text-[12px] font-semibold text-primary underline underline-offset-4"
+      >
         {t.documents.openPdf}
       </a>
     </div>
@@ -42,13 +52,19 @@ export function DocumentCard({ assignment }: { assignment: Assignment }) {
         <span
           className={cn(
             "shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide",
-            completed ? "bg-success/15 text-success" : overdue ? "bg-destructive/15 text-destructive" : "bg-warning/15 text-warning",
+            completed
+              ? "bg-success/15 text-success"
+              : overdue
+                ? "bg-destructive/15 text-destructive"
+                : "bg-warning/15 text-warning",
           )}
         >
           {completed ? completedLabel : overdue ? t.common.overdue : t.common.pending}
         </span>
       </div>
-      <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground">{document.description}</p>
+      <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground">
+        {document.description}
+      </p>
       <div className="mt-1 text-[11px] text-muted-foreground">
         {t.documents.pages(document.pages)} · {dueLabel(assignment.due_date, lang)}
       </div>
@@ -62,15 +78,28 @@ export function DocumentCard({ assignment }: { assignment: Assignment }) {
 
       <div className="mt-4 flex items-center gap-3">
         {completed ? (
-          <button type="button" onClick={() => setOpen(!open)} className="text-[12px] font-semibold text-muted-foreground underline decoration-border underline-offset-4">
+          <button
+            type="button"
+            onClick={() => setOpen(!open)}
+            className="text-[12px] font-semibold text-muted-foreground underline decoration-border underline-offset-4"
+          >
             {open ? t.documents.hide : t.documents.view}
           </button>
         ) : open ? (
-          <button type="button" disabled={update.isPending} onClick={confirm} className="rounded-lg bg-primary px-3 py-1.5 text-[12px] font-semibold text-primary-foreground shadow-primary transition hover:opacity-90">
+          <button
+            type="button"
+            disabled={update.isPending}
+            onClick={confirm}
+            className="rounded-lg bg-primary px-3 py-1.5 text-[12px] font-semibold text-primary-foreground shadow-primary transition hover:opacity-90"
+          >
             {document.requires_signature ? t.documents.sign : t.documents.markRead}
           </button>
         ) : (
-          <button type="button" onClick={() => setOpen(true)} className="rounded-lg bg-accent px-3 py-1.5 text-[12px] font-semibold text-accent-foreground transition hover:bg-primary/20">
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="rounded-lg bg-accent px-3 py-1.5 text-[12px] font-semibold text-accent-foreground transition hover:bg-primary/20"
+          >
             {document.requires_signature ? t.documents.reviewSign : t.documents.readBtn}
           </button>
         )}

@@ -9,7 +9,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // `npm run build:azure` sets this. It builds a static SPA (no server) for Azure Static Web Apps.
 // Why: SWA serves static files; all data goes browser -> Supabase, so no SSR server is needed.
 // Lovable builds don't set it, so they keep the default SSR/Cloudflare output.
-const IS_AZURE_SWA_BUILD = process.env.BUILD_TARGET === "azure-swa";
+const IS_AZURE_SWA_BUILD = process.env["BUILD_TARGET"] === "azure-swa";
 
 export default defineConfig({
   tanstackStart: {

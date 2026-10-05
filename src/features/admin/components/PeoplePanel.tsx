@@ -32,7 +32,10 @@ export function PeoplePanel() {
 
   const setManager = useMutation({
     mutationFn: async ({ id, manager }: { id: string; manager: string }) => {
-      const { error } = await supabase.from("profiles").update({ manager_id: manager || null }).eq("id", id);
+      const { error } = await supabase
+        .from("profiles")
+        .update({ manager_id: manager || null })
+        .eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["profiles"] }),
@@ -45,7 +48,10 @@ export function PeoplePanel() {
   return (
     <div className="glass overflow-hidden rounded-2xl">
       {people.map((p) => (
-        <div key={p.id} className="flex flex-wrap items-center gap-4 border-b border-border px-5 py-4 last:border-0">
+        <div
+          key={p.id}
+          className="flex flex-wrap items-center gap-4 border-b border-border px-5 py-4 last:border-0"
+        >
           <div className="min-w-[180px] flex-1">
             <div className="text-[13px] font-semibold">{p.full_name || p.email}</div>
             <div className="text-[11px] text-muted-foreground">{p.email}</div>

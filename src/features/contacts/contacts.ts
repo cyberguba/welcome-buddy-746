@@ -1,10 +1,73 @@
 import type { Contact } from "@/shared/types/induction";
 
 export const CONTACTS: Contact[] = [
-  { team: { et: "IT-tugi", en: "IT support" }, name: "Kristjan Tamm", role: { et: "IT-toe juht", en: "IT helpdesk lead" }, email: "it@postimees.ee", phone: "+372 666 2100", hours: { et: "E–R 8:00–18:00", en: "Mon–Fri 8:00–18:00" }, help: { et: "Sülearvuti, kontod, paroolid, VPN, e-post", en: "Laptop, accounts, passwords, VPN, email access" } },
-  { team: { et: "Personal", en: "HR / People" }, name: "Liis Kask", role: { et: "Personalipartner", en: "HR partner" }, email: "personal@postimees.ee", phone: "+372 666 2200", hours: { et: "E–R 9:00–17:00", en: "Mon–Fri 9:00–17:00" }, help: { et: "Leping, puhkused, haigusleht, hüvitised", en: "Contract, holidays, sick leave, benefits" } },
-  { team: { et: "Palgaarvestus", en: "Payroll" }, name: "Mari Saar", role: { et: "Palgaarvestaja", en: "Payroll specialist" }, email: "palk@postimees.ee", phone: "+372 666 2210", hours: { et: "E–R 9:00–16:00", en: "Mon–Fri 9:00–16:00" }, help: { et: "Palk, pangaandmed, maksuküsimused", en: "Salary, bank details, tax questions" } },
-  { team: { et: "Kontor ja haldus", en: "Office & facilities" }, name: "Andres Mägi", role: { et: "Kontorijuht", en: "Office manager" }, email: "kontor@postimees.ee", phone: "+372 666 2300", hours: { et: "E–R 8:30–17:00", en: "Mon–Fri 8:30–17:00" }, help: { et: "Pääsukaart, töölaud, parkimine, hoone", en: "Access card, desk, parking, building" } },
-  { team: { et: "Turvalisus ja ohutus", en: "Security & safety" }, name: "Tõnu Lepp", role: { et: "Ohutusspetsialist", en: "Safety officer" }, email: "turva@postimees.ee", phone: "+372 666 2400", hours: { et: "24/7 hädaolukorras", en: "24/7 for emergencies" }, help: { et: "Tuleohutus, intsidendid, tööohutus", en: "Fire safety, incidents, workplace safety" } },
-  { team: { et: "Sinu tugiisik", en: "Your buddy" }, name: "Marcus Vaher", role: { et: "Tootedisain", en: "Product Design" }, email: "marcus.vaher@postimees.ee", phone: "+372 5555 1234", hours: { et: "Alati Slackis", en: "Anytime on Slack" }, help: { et: "Igapäevased küsimused, tutvustused, kus mis asub", en: "Everyday questions, team intros, where things are" } },
+  {
+    team: { et: "IT-tugi", en: "IT support" },
+    name: "Kristjan Tamm",
+    role: { et: "IT-toe juht", en: "IT helpdesk lead" },
+    email: "it@postimees.ee",
+    phone: "+372 666 2100",
+    hours: { et: "E–R 8:00–18:00", en: "Mon–Fri 8:00–18:00" },
+    help: {
+      et: "Sülearvuti, kontod, paroolid, VPN, e-post",
+      en: "Laptop, accounts, passwords, VPN, email access",
+    },
+  },
+  {
+    team: { et: "Personal", en: "HR / People" },
+    name: "Liis Kask",
+    role: { et: "Personalipartner", en: "HR partner" },
+    email: "personal@postimees.ee",
+    phone: "+372 666 2200",
+    hours: { et: "E–R 9:00–17:00", en: "Mon–Fri 9:00–17:00" },
+    help: {
+      et: "Leping, puhkused, haigusleht, hüvitised",
+      en: "Contract, holidays, sick leave, benefits",
+    },
+  },
+  {
+    team: { et: "Palgaarvestus", en: "Payroll" },
+    name: "Mari Saar",
+    role: { et: "Palgaarvestaja", en: "Payroll specialist" },
+    email: "palk@postimees.ee",
+    phone: "+372 666 2210",
+    hours: { et: "E–R 9:00–16:00", en: "Mon–Fri 9:00–16:00" },
+    help: { et: "Palk, pangaandmed, maksuküsimused", en: "Salary, bank details, tax questions" },
+  },
+  {
+    team: { et: "Kontor ja haldus", en: "Office & facilities" },
+    name: "Andres Mägi",
+    role: { et: "Kontorijuht", en: "Office manager" },
+    email: "kontor@postimees.ee",
+    phone: "+372 666 2300",
+    hours: { et: "E–R 8:30–17:00", en: "Mon–Fri 8:30–17:00" },
+    help: {
+      et: "Pääsukaart, töölaud, parkimine, hoone",
+      en: "Access card, desk, parking, building",
+    },
+  },
+  {
+    team: { et: "Turvalisus ja ohutus", en: "Security & safety" },
+    name: "Tõnu Lepp",
+    role: { et: "Ohutusspetsialist", en: "Safety officer" },
+    email: "turva@postimees.ee",
+    phone: "+372 666 2400",
+    hours: { et: "24/7 hädaolukorras", en: "24/7 for emergencies" },
+    help: {
+      et: "Tuleohutus, intsidendid, tööohutus",
+      en: "Fire safety, incidents, workplace safety",
+    },
+  },
+  {
+    team: { et: "Sinu tugiisik", en: "Your buddy" },
+    name: "Marcus Vaher",
+    role: { et: "Tootedisain", en: "Product Design" },
+    email: "marcus.vaher@postimees.ee",
+    phone: "+372 5555 1234",
+    hours: { et: "Alati Slackis", en: "Anytime on Slack" },
+    help: {
+      et: "Igapäevased küsimused, tutvustused, kus mis asub",
+      en: "Everyday questions, team intros, where things are",
+    },
+  },
 ];

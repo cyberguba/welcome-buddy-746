@@ -32,7 +32,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLangState(l);
   };
 
-  return <LangContext.Provider value={{ lang, setLang, t: DICTS[lang] }}>{children}</LangContext.Provider>;
+  return (
+    <LangContext.Provider value={{ lang, setLang, t: DICTS[lang] }}>
+      {children}
+    </LangContext.Provider>
+  );
 }
 
 export function useT() {

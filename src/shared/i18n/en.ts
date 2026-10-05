@@ -1,10 +1,24 @@
 import type { Dict } from "./et";
 
 export const en: Dict = {
-  nav: { overview: "Overview", plan: "My plan", documents: "Documents", courses: "Courses", contacts: "Contacts", team: "My team", hr: "HR admin" },
-  header: { onboarding: "Onboarding", viewingAs: "Viewing as", viewAsAria: "View the app as", language: "Language" },
+  nav: {
+    overview: "Overview",
+    plan: "My plan",
+    documents: "Documents",
+    courses: "Courses",
+    contacts: "Contacts",
+    team: "My team",
+    hr: "HR admin",
+  },
+  header: {
+    onboarding: "Onboarding",
+    viewingAs: "Viewing as",
+    viewAsAria: "View the app as",
+    language: "Language",
+  },
   roles: { hr: "HR", manager: "Manager", employee: "Employee" },
-  footer: "Need a hand? Reach your buddy or the People team at personal@postimees.ee — we're here for your first 90 days.",
+  footer:
+    "Need a hand? Reach your buddy or the People team at personal@postimees.ee — we're here for your first 90 days.",
   filters: { All: "All", Pending: "Pending", Completed: "Completed" },
   common: {
     completedOf: (d, t) => `${d} of ${t} completed`,
@@ -78,7 +92,10 @@ export const en: Dict = {
     allDone: "Everything is completed.",
     nothing: "Nothing assigned yet. HR or the manager will add tasks.",
   },
-  team: { onlyManagers: "This page is only for managers.", empty: "No one reports to you yet. HR can add people to your team." },
+  team: {
+    onlyManagers: "This page is only for managers.",
+    empty: "No one reports to you yet. HR can add people to your team.",
+  },
   hr: {
     onlyHr: "This page is only for HR.",
     tabs: { progress: "Progress", library: "Library", people: "People & roles" },

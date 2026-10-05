@@ -20,7 +20,9 @@ export function StatusFilterBar({ value, onChange }: StatusFilterBarProps) {
           onClick={() => onChange(option)}
           className={cn(
             "rounded-full px-3 py-1.5 text-[12px] font-semibold transition",
-            value === option ? "bg-foreground text-background" : "glass text-muted-foreground shadow-none",
+            value === option
+              ? "bg-foreground text-background"
+              : "glass text-muted-foreground shadow-none",
           )}
         >
           {t.filters[option]}

@@ -1,5 +1,10 @@
 import { Check, Globe } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useT, type Lang } from "@/shared/i18n";
 
 const NAMES: Record<Lang, string> = { et: "Eesti keel", en: "English" };

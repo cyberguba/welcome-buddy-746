@@ -20,7 +20,10 @@ export function DocumentsPage() {
 
   return (
     <section className="mt-7">
-      <SectionHeader title={t.documents.title} meta={t.common.completedOf(totals.documentsDone, totals.documentsTotal)} />
+      <SectionHeader
+        title={t.documents.title}
+        meta={t.common.completedOf(totals.documentsDone, totals.documentsTotal)}
+      />
       <StatusFilterBar value={filter} onChange={setFilter} />
       <div className="grid gap-4 md:grid-cols-3">
         {visible.map((a) => (
