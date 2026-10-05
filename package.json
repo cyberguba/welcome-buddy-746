@@ -7,6 +7,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "build:azure": "BUILD_TARGET=azure-swa vite build",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
