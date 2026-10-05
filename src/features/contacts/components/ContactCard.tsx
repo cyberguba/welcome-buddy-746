@@ -1,5 +1,5 @@
 import { useT } from "@/shared/i18n";
-import { initials, telHref } from "@/shared/lib/format";
+import { buildPhoneHref, getInitials } from "@/shared/lib/format";
 import type { Contact } from "@/shared/types/induction";
 
 export function ContactCard({ contact }: { contact: Contact }) {
@@ -11,7 +11,7 @@ export function ContactCard({ contact }: { contact: Contact }) {
       </div>
       <div className="mt-3 flex items-center gap-3">
         <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent text-[13px] font-bold text-accent-foreground">
-          {initials(contact.name)}
+          {getInitials(contact.name)}
         </div>
         <div className="min-w-0">
           <h3 className="font-display text-[14px] font-bold">{contact.name}</h3>
@@ -26,7 +26,7 @@ export function ContactCard({ contact }: { contact: Contact }) {
         >
           {contact.email}
         </a>
-        <a href={telHref(contact.phone)} className="block text-foreground">
+        <a href={buildPhoneHref(contact.phone)} className="block text-foreground">
           {contact.phone}
         </a>
         <div className="text-[11px] text-muted-foreground">{contact.hours[lang]}</div>

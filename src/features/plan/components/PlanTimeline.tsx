@@ -1,42 +1,39 @@
 import { useT } from "@/shared/i18n";
 import { cn } from "@/lib/utils";
-import { groupByWeek } from "@/shared/lib/format";
-import type { Assignment } from "@/shared/api/induction-api";
+import type { Assignment } from "@/shared/api/types";
+import { groupAssignmentsByWeek, type PlanGroupTone } from "../group-assignments-by-week";
 import { PlanItemRow } from "./PlanItemRow";
 
-export function PlanTimeline({ items }: { items: Assignment[] }) {
+const TONE_DOT_CLASS: Record<PlanGroupTone, string> = {
+  overdue: "bg-destructive",
+  none: "bg-muted-foreground",
+  week: "bg-primary",
+};
+
+export function PlanTimeline({ assignments }: { assignments: Assignment[] }) {
   const { t, lang } = useT();
-  const groups = groupByWeek(items, lang);
+  const groups = groupAssignmentsByWeek(assignments, lang);
   return (
     <div className="space-y-6">
-      {groups.map((g) => (
-        <div key={g.key} className="animate-rise">
+      {groups.map((group) => (
+        <div key={group.key} className="animate-rise">
           <div className="mb-2 flex items-center gap-2">
-            <span
-              className={cn(
-                "size-2 rounded-full",
-                g.tone === "overdue"
-                  ? "bg-destructive"
-                  : g.tone === "none"
-                    ? "bg-muted-foreground"
-                    : "bg-primary",
-              )}
-            />
+            <span aria-hidden className={cn("size-2 rounded-full", TONE_DOT_CLASS[group.tone])} />
             <h2
               className={cn(
                 "font-display text-[14px] font-bold",
-                g.tone === "overdue" && "text-destructive",
+                group.tone === "overdue" && "text-destructive",
               )}
             >
-              {g.label}
+              {group.label}
             </h2>
             <span className="text-[11px] text-muted-foreground">
-              {t.common.items(g.items.length)}
+              {t.common.items(group.items.length)}
             </span>
           </div>
           <div className="glass overflow-hidden rounded-2xl">
-            {g.items.map((a) => (
-              <PlanItemRow key={a.id} assignment={a} />
+            {group.items.map((assignment) => (
+              <PlanItemRow key={assignment.id} assignment={assignment} />
             ))}
           </div>
         </div>

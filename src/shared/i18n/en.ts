@@ -36,6 +36,7 @@ export const en: Dict = {
     doc: "Doc",
     untitled: "Untitled",
     nothing: "Nothing here.",
+    progress: "Progress",
   },
   course: {
     completed: "Completed",
@@ -112,6 +113,7 @@ export const en: Dict = {
     current: "Currently assigned",
     none: "Nothing assigned yet.",
     remove: "Remove",
+    removeItem: (title) => `Remove "${title}"`,
     dueDate: "Due date",
     addCourses: "Add courses",
     addDocuments: "Add documents",
@@ -137,6 +139,7 @@ export const en: Dict = {
     documentAdded: "Document added",
     pdfAttached: "PDF attached",
     delete: "Delete",
+    deleteItem: (title) => `Delete "${title}"`,
     confirmDelete: (t) => `Delete "${t}"? It will also be removed from everyone's list.`,
     sign: "sign",
     read: "read",
@@ -146,6 +149,12 @@ export const en: Dict = {
     pages: "Pages",
     needsSignature: "Needs signature",
     defaultCategory: "Onboarding",
+  },
+  errors: {
+    generic: "Something went wrong. Please try again.",
+    invalidInput: "Please check the values you entered.",
+    pdfOnly: "Only PDF files are allowed.",
+    pdfTooLarge: (maxMegabytes) => `The PDF can be at most ${maxMegabytes} MB.`,
   },
   people: { selfHr: "You can't remove your own HR role", manager: "Manager", none: "None" },
 };

@@ -1,30 +1,40 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { assignmentsQuery, summarize } from "@/shared/api/induction-api";
+import { updateAssignmentProgress, userAssignmentsQuery } from "@/shared/api/assignments";
+import { QUERY_KEYS } from "@/shared/api/query-keys";
+import type { Assignment } from "@/shared/api/types";
+import { matchesStatusFilter, summarizeAssignments } from "@/shared/lib/assignments";
+import type { StatusFilter } from "@/shared/types/induction";
 import { useAuth } from "@/features/auth/use-auth";
 
+/** The current person's assignments plus done/total counts. */
 export function useMyAssignments() {
   const { userId } = useAuth();
-  const query = useQuery({ ...assignmentsQuery(userId ?? ""), enabled: !!userId });
-  const list = query.data ?? [];
-  return { ...query, list, totals: summarize(list) };
+  const query = useQuery(userAssignmentsQuery(userId));
+  const assignments = query.data ?? [];
+  return { ...query, assignments, summary: summarizeAssignments(assignments) };
+}
+
+type AssignmentKind = "course" | "document";
+
+function isOfKind(assignment: Assignment, kind: AssignmentKind): boolean {
+  return kind === "course" ? !!assignment.course_id : !!assignment.document_id;
+}
+
+/** The current person's courses or documents that match the status filter. */
+export function useFilteredAssignments(kind: AssignmentKind, filter: StatusFilter) {
+  const { assignments, summary, isLoading } = useMyAssignments();
+  const visibleAssignments = assignments.filter(
+    (assignment) => isOfKind(assignment, kind) && matchesStatusFilter(assignment, filter),
+  );
+  return { visibleAssignments, summary, isLoading };
 }
 
 export function useUpdateProgress() {
-  const qc = useQueryClient();
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, progress }: { id: string; progress: number }) => {
-      const { error } = await supabase
-        .from("assignments")
-        .update({ progress: Math.min(100, progress) })
-        .eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["assignments"] }),
-    onError: (error: Error) => {
-      console.error("Induction data update failed", error);
-      toast.error(error.message);
-    },
+    mutationKey: ["update-progress"],
+    mutationFn: ({ assignmentId, progress }: { assignmentId: string; progress: number }) =>
+      updateAssignmentProgress(assignmentId, progress),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEYS.assignments }),
   });
 }

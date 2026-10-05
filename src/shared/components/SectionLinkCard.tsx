@@ -5,11 +5,11 @@ interface SectionLinkCardProps {
   title: string;
   meta: string;
   to: "/documents" | "/courses" | "/contacts";
-  cta: string;
-  pct?: number;
+  callToAction: string;
+  percent?: number;
 }
 
-export function SectionLinkCard({ title, meta, to, cta, pct }: SectionLinkCardProps) {
+export function SectionLinkCard({ title, meta, to, callToAction, percent }: SectionLinkCardProps) {
   return (
     <Link
       to={to}
@@ -17,13 +17,16 @@ export function SectionLinkCard({ title, meta, to, cta, pct }: SectionLinkCardPr
     >
       <div className="font-display text-[15px] font-bold">{title}</div>
       <div className="mt-1 text-[12px] font-medium text-muted-foreground">{meta}</div>
-      {pct !== undefined && (
+      {percent !== undefined && (
         <div className="mt-3">
-          <ProgressBar pct={pct} />
+          <ProgressBar percent={percent} label={title} />
         </div>
       )}
       <div className="mt-4 text-[12px] font-semibold text-primary">
-        {cta} <span className="inline-block transition group-hover:translate-x-0.5">→</span>
+        {callToAction}{" "}
+        <span aria-hidden className="inline-block transition group-hover:translate-x-0.5">
+          →
+        </span>
       </div>
     </Link>
   );

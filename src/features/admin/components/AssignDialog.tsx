@@ -1,122 +1,83 @@
-import { useT } from "@/shared/i18n";
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { supabase } from "@/integrations/supabase/client";
-import {
-  assignmentsQuery,
-  coursesQuery,
-  documentsQuery,
-  type Profile,
-} from "@/shared/api/induction-api";
-import { dueLabel } from "@/shared/lib/format";
+import { useT } from "@/shared/i18n";
+import { userAssignmentsQuery, type AssignableItem } from "@/shared/api/assignments";
+import { coursesQuery } from "@/shared/api/courses";
+import { documentsQuery } from "@/shared/api/documents";
+import type { Profile } from "@/shared/api/types";
 import { useAuth } from "@/features/auth/use-auth";
+import { useCreateAssignments } from "../hooks/use-assignment-mutations";
+import { AssignableOptionList, type AssignableOption } from "./AssignableOptionList";
+import { CurrentAssignmentRow } from "./CurrentAssignmentRow";
 
 interface AssignDialogProps {
   employee: Profile | null;
   onClose: () => void;
 }
 
+function isSameItem(first: AssignableItem, second: AssignableItem): boolean {
+  return first.kind === second.kind && first.id === second.id;
+}
+
 export function AssignDialog({ employee, onClose }: AssignDialogProps) {
   const { userId } = useAuth();
-  const { t, lang } = useT();
-  const qc = useQueryClient();
+  const { t } = useT();
   const { data: courses = [] } = useQuery(coursesQuery);
   const { data: documents = [] } = useQuery(documentsQuery);
-  const { data: current = [] } = useQuery({
-    ...assignmentsQuery(employee?.id ?? ""),
+  const { data: currentAssignments = [] } = useQuery({
+    ...userAssignmentsQuery(employee?.id ?? ""),
     enabled: !!employee,
   });
-  const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [due, setDue] = useState("");
+  const [selectedItems, setSelectedItems] = useState<AssignableItem[]>([]);
+  const [dueDate, setDueDate] = useState("");
+  const createAssignments = useCreateAssignments();
 
-  const assignedIds = new Set(current.map((a) => a.course_id ?? a.document_id));
-  const toggle = (key: string) => {
-    const next = new Set(selected);
-    if (next.has(key)) next.delete(key);
-    else next.add(key);
-    setSelected(next);
+  const assignedItemIds = new Set(
+    currentAssignments.map((assignment) => assignment.course_id ?? assignment.document_id),
+  );
+  const courseOptions: AssignableOption[] = courses
+    .filter((course) => !assignedItemIds.has(course.id))
+    .map((course) => ({
+      kind: "course",
+      id: course.id,
+      title: course.title,
+      meta: `${course.minutes} min`,
+    }));
+  const documentOptions: AssignableOption[] = documents
+    .filter((document) => !assignedItemIds.has(document.id))
+    .map((document) => ({
+      kind: "document",
+      id: document.id,
+      title: document.title,
+      meta: `${document.pages} p`,
+    }));
+
+  const isSelected = (item: AssignableItem) =>
+    selectedItems.some((selected) => isSameItem(selected, item));
+  const toggleItem = (item: AssignableItem) =>
+    setSelectedItems((current) =>
+      isSelected(item)
+        ? current.filter((selected) => !isSameItem(selected, item))
+        : [...current, item],
+    );
+
+  const assignSelectedItems = () => {
+    if (!employee) return;
+    createAssignments.mutate(
+      { userId: employee.id, items: selectedItems, dueDate, assignedBy: userId },
+      {
+        onSuccess: () => {
+          toast.success(t.assign.added(selectedItems.length, employee.full_name));
+          setSelectedItems([]);
+        },
+      },
+    );
   };
 
-  const refresh = () => qc.invalidateQueries({ queryKey: ["assignments"] });
-
-  const assign = useMutation({
-    mutationFn: async () => {
-      if (!employee) return;
-      const rows = [...selected].map((key) => {
-        const [type, rawId] = key.split(":");
-        const id = rawId ?? "";
-        return {
-          user_id: employee.id,
-          course_id: type === "course" ? id : null,
-          document_id: type === "document" ? id : null,
-          due_date: due || null,
-          assigned_by: userId,
-        };
-      });
-      const { error } = await supabase.from("assignments").insert(rows);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      toast.success(t.assign.added(selected.size, employee?.full_name ?? ""));
-      setSelected(new Set());
-      refresh();
-    },
-    onError: (error: Error) => {
-      console.error("Induction data update failed", error);
-      toast.error(error.message);
-    },
-  });
-
-  const remove = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from("assignments").delete().eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: refresh,
-    onError: (error: Error) => {
-      console.error("Induction data update failed", error);
-      toast.error(error.message);
-    },
-  });
-
-  const updateDue = useMutation({
-    mutationFn: async ({ id, date }: { id: string; date: string }) => {
-      const { error } = await supabase
-        .from("assignments")
-        .update({ due_date: date || null })
-        .eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: refresh,
-    onError: (error: Error) => {
-      console.error("Induction data update failed", error);
-      toast.error(error.message);
-    },
-  });
-
-  const option = (key: string, title: string, meta: string) => (
-    <label
-      key={key}
-      className="flex cursor-pointer items-center gap-3 rounded-xl bg-card/70 px-3 py-2 ring-1 ring-border"
-    >
-      <input
-        type="checkbox"
-        checked={selected.has(key)}
-        onChange={() => toggle(key)}
-        className="accent-primary"
-      />
-      <span className="flex-1 text-[13px] font-medium">{title}</span>
-      <span className="text-[11px] text-muted-foreground">{meta}</span>
-    </label>
-  );
-
-  const freeCourses = courses.filter((c) => !assignedIds.has(c.id));
-  const freeDocs = documents.filter((d) => !assignedIds.has(d.id));
-
   return (
-    <Dialog open={!!employee} onOpenChange={(o) => !o && onClose()}>
+    <Dialog open={!!employee} onOpenChange={(isOpen) => !isOpen && onClose()}>
       <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="font-display">
@@ -125,68 +86,34 @@ export function AssignDialog({ employee, onClose }: AssignDialogProps) {
         </DialogHeader>
 
         <div>
-          <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+          <h3 className="mb-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
             {t.assign.current}
-          </div>
-          {current.length === 0 && (
+          </h3>
+          {currentAssignments.length === 0 && (
             <p className="text-[12px] text-muted-foreground">{t.assign.none}</p>
           )}
           <div className="space-y-2">
-            {current.map((a) => (
-              <div key={a.id} className="flex items-center gap-3 rounded-xl bg-muted px-3 py-2">
-                <span className="w-16 text-[10px] font-semibold uppercase text-primary">
-                  {a.course ? t.common.course : t.common.doc}
-                </span>
-                <span className="flex-1 text-[13px]">{a.course?.title ?? a.document?.title}</span>
-                <span className="text-[11px] text-muted-foreground">
-                  {a.progress >= 100 ? t.common.done : `${a.progress}%`}
-                </span>
-                <input
-                  type="date"
-                  defaultValue={a.due_date ?? ""}
-                  onBlur={(e) =>
-                    e.target.value !== (a.due_date ?? "") &&
-                    updateDue.mutate({ id: a.id, date: e.target.value })
-                  }
-                  className="rounded-lg bg-card px-2 py-1 text-[11px] ring-1 ring-border"
-                  aria-label={t.assign.dueDate}
-                  title={dueLabel(a.due_date, lang)}
-                />
-                <button
-                  type="button"
-                  onClick={() => remove.mutate(a.id)}
-                  className="text-[11px] font-semibold text-destructive"
-                >
-                  {t.assign.remove}
-                </button>
-              </div>
+            {currentAssignments.map((assignment) => (
+              <CurrentAssignmentRow key={assignment.id} assignment={assignment} />
             ))}
           </div>
         </div>
 
         <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <div>
-            <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-              {t.assign.addCourses}
-            </div>
-            <div className="space-y-2">
-              {freeCourses.map((c) => option(`course:${c.id}`, c.title, `${c.minutes} min`))}
-              {freeCourses.length === 0 && (
-                <p className="text-[12px] text-muted-foreground">{t.assign.allCourses}</p>
-              )}
-            </div>
-          </div>
-          <div>
-            <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-              {t.assign.addDocuments}
-            </div>
-            <div className="space-y-2">
-              {freeDocs.map((d) => option(`document:${d.id}`, d.title, `${d.pages} p`))}
-              {freeDocs.length === 0 && (
-                <p className="text-[12px] text-muted-foreground">{t.assign.allDocuments}</p>
-              )}
-            </div>
-          </div>
+          <AssignableOptionList
+            title={t.assign.addCourses}
+            emptyMessage={t.assign.allCourses}
+            options={courseOptions}
+            isSelected={isSelected}
+            onToggle={toggleItem}
+          />
+          <AssignableOptionList
+            title={t.assign.addDocuments}
+            emptyMessage={t.assign.allDocuments}
+            options={documentOptions}
+            isSelected={isSelected}
+            onToggle={toggleItem}
+          />
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -194,18 +121,18 @@ export function AssignDialog({ employee, onClose }: AssignDialogProps) {
             {t.assign.dueDate}{" "}
             <input
               type="date"
-              value={due}
-              onChange={(e) => setDue(e.target.value)}
+              value={dueDate}
+              onChange={(event) => setDueDate(event.target.value)}
               className="ml-2 rounded-lg bg-card px-2 py-1.5 text-[12px] ring-1 ring-border"
             />
           </label>
           <button
             type="button"
-            disabled={selected.size === 0 || assign.isPending}
-            onClick={() => assign.mutate()}
+            disabled={selectedItems.length === 0 || createAssignments.isPending}
+            onClick={assignSelectedItems}
             className="ml-auto rounded-xl bg-primary px-5 py-2 text-[13px] font-semibold text-primary-foreground shadow-primary transition hover:opacity-90 disabled:opacity-50"
           >
-            {t.assign.button(selected.size)}
+            {t.assign.button(selectedItems.length)}
           </button>
         </div>
       </DialogContent>

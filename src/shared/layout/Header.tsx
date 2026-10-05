@@ -1,23 +1,18 @@
 import { Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import logoUrl from "@/assets/postimees-logo.png";
-import { useAuth } from "@/features/auth/use-auth";
-import { initials } from "@/shared/lib/format";
 import { useT } from "@/shared/i18n";
+import { getInitials } from "@/shared/lib/format";
+import { useAuth } from "@/features/auth/use-auth";
 import { LanguageMenu } from "./LanguageMenu";
-import { profilesQuery, rolesQuery } from "@/shared/api/induction-api";
+import { ViewAsPicker } from "./ViewAsPicker";
 import { NAV_ITEMS } from "./navigation";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 export function Header() {
-  const { userId, profile, roles, setViewAs } = useAuth();
+  const { profile, roles } = useAuth();
   const { t } = useT();
-  const isMobile = useIsMobile();
-  const { data: people = [] } = useQuery(profilesQuery);
-  const { data: roleMap = {} } = useQuery(rolesQuery);
-  const navItems = NAV_ITEMS.filter((item) => !item.role || roles.includes(item.role));
-  const getHighestRole = (userRoles: string[]): "hr" | "manager" | "employee" =>
-    userRoles.includes("hr") ? "hr" : userRoles.includes("manager") ? "manager" : "employee";
+  const navItems = NAV_ITEMS.filter(
+    (item) => !item.requiredRole || roles.includes(item.requiredRole),
+  );
 
   return (
     <>
@@ -45,33 +40,19 @@ export function Header() {
               className="transition hover:text-foreground"
               activeProps={{ className: "text-foreground" }}
             >
-              {t.nav[item.key]}
+              {t.nav[item.labelKey]}
             </Link>
           ))}
         </nav>
 
         <div className="flex min-w-0 items-center justify-end gap-1 sm:gap-2">
-          <label className="min-w-0 text-right">
-            <span className="hidden text-[10px] sm:block font-medium uppercase tracking-wide text-muted-foreground">
-              {t.header.viewingAs}
-            </span>
-            <select
-              value={userId ?? ""}
-              onChange={(e) => setViewAs(e.target.value)}
-              className="w-full max-w-[170px] truncate bg-transparent text-right text-[12px] font-semibold outline-none"
-              aria-label={t.header.viewAsAria}
-            >
-              {people.map((person) => (
-                <option key={person.id} value={person.id}>
-                  {person.full_name}
-                  {isMobile ? "" : ` · ${t.roles[getHighestRole(roleMap[person.id] ?? [])]}`}
-                </option>
-              ))}
-            </select>
-          </label>
+          <ViewAsPicker />
           <LanguageMenu />
-          <div className="hidden size-9 shrink-0 place-items-center rounded-full bg-accent text-[12px] font-bold text-accent-foreground ring-1 ring-border sm:grid">
-            {initials(profile?.full_name || "")}
+          <div
+            aria-hidden
+            className="hidden size-9 shrink-0 place-items-center rounded-full bg-accent text-[12px] font-bold text-accent-foreground ring-1 ring-border sm:grid"
+          >
+            {getInitials(profile?.full_name ?? "")}
           </div>
         </div>
       </header>
@@ -86,7 +67,7 @@ export function Header() {
               className="glass rounded-full px-3 py-1.5 text-[12px] font-medium text-muted-foreground shadow-none"
               activeProps={{ className: "text-primary" }}
             >
-              {t.nav[item.key]}
+              {t.nav[item.labelKey]}
             </Link>
           ))}
         </nav>

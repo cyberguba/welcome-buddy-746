@@ -34,6 +34,7 @@ export const et = {
     doc: "Dok",
     untitled: "Pealkirjata",
     nothing: "Siin pole midagi.",
+    progress: "Edenemine",
   },
   course: {
     completed: "Läbitud",
@@ -114,6 +115,7 @@ export const et = {
     current: "Praegu määratud",
     none: "Veel pole midagi määratud.",
     remove: "Eemalda",
+    removeItem: (title: string) => `Eemalda „${title}”`,
     dueDate: "Tähtaeg",
     addCourses: "Lisa koolitusi",
     addDocuments: "Lisa dokumente",
@@ -140,6 +142,7 @@ export const et = {
     documentAdded: "Dokument lisatud",
     pdfAttached: "PDF lisatud",
     delete: "Kustuta",
+    deleteItem: (title: string) => `Kustuta „${title}”`,
     confirmDelete: (t: string) => `Kas kustutada „${t}”? See eemaldatakse ka kõigi nimekirjadest.`,
     sign: "allkiri",
     read: "lugemine",
@@ -149,6 +152,12 @@ export const et = {
     pages: "Lehekülgi",
     needsSignature: "Vajab allkirja",
     defaultCategory: "Sisseelamine",
+  },
+  errors: {
+    generic: "Midagi läks valesti. Proovi uuesti.",
+    invalidInput: "Kontrolli sisestatud andmeid.",
+    pdfOnly: "Lubatud on ainult PDF-failid.",
+    pdfTooLarge: (maxMegabytes: number) => `PDF-fail võib olla kuni ${maxMegabytes} MB.`,
   },
   people: { selfHr: "Sa ei saa enda HR-rolli eemaldada", manager: "Juht", none: "Puudub" },
 };

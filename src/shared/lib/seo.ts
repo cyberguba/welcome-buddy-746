@@ -1,12 +1,12 @@
-const SITE = "Postimees sisseelamine";
+const SITE_NAME = "Postimees sisseelamine";
 
-export function pageMeta(title: string, description: string) {
-  const full = `${title} — ${SITE}`;
+export function buildPageMeta(title: string, description: string) {
+  const fullTitle = `${title} — ${SITE_NAME}`;
   return {
     meta: [
-      { title: full },
+      { title: fullTitle },
       { name: "description", content: description },
-      { property: "og:title", content: full },
+      { property: "og:title", content: fullTitle },
       { property: "og:description", content: description },
     ],
   };
