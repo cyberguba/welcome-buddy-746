@@ -1,8 +1,22 @@
 export const et = {
-  nav: { overview: "Ülevaade", plan: "Minu plaan", documents: "Dokumendid", courses: "Koolitused", contacts: "Kontaktid", team: "Minu meeskond", hr: "HR haldus" },
-  header: { onboarding: "Sisseelamine", viewingAs: "Vaatan kui", viewAsAria: "Vali, kelle vaates rakendust näed", language: "Keel" },
+  nav: {
+    overview: "Ülevaade",
+    plan: "Minu plaan",
+    documents: "Dokumendid",
+    courses: "Koolitused",
+    contacts: "Kontaktid",
+    team: "Minu meeskond",
+    hr: "HR haldus",
+  },
+  header: {
+    onboarding: "Sisseelamine",
+    viewingAs: "Vaatan kui",
+    viewAsAria: "Vali, kelle vaates rakendust näed",
+    language: "Keel",
+  },
   roles: { hr: "HR", manager: "Juht", employee: "Töötaja" },
-  footer: "Vajad abi? Pöördu oma tugiisiku või personaliosakonna poole: personal@postimees.ee — oleme sinuga esimesed 90 päeva.",
+  footer:
+    "Vajad abi? Pöördu oma tugiisiku või personaliosakonna poole: personal@postimees.ee — oleme sinuga esimesed 90 päeva.",
   filters: { All: "Kõik", Pending: "Ootel", Completed: "Tehtud" },
   common: {
     completedOf: (d: number, t: number) => `${d}/${t} tehtud`,
@@ -20,6 +34,7 @@ export const et = {
     doc: "Dok",
     untitled: "Pealkirjata",
     nothing: "Siin pole midagi.",
+    progress: "Edenemine",
   },
   course: {
     completed: "Läbitud",
@@ -28,7 +43,11 @@ export const et = {
     start: "Alusta koolitust",
     continue: "Jätka",
   },
-  weeks: { thisWeek: "See nädal", nextWeek: "Järgmine nädal", weekOf: (s: string) => `Nädal alates ${s}` },
+  weeks: {
+    thisWeek: "See nädal",
+    nextWeek: "Järgmine nädal",
+    weekOf: (s: string) => `Nädal alates ${s}`,
+  },
   overview: {
     welcome: "Tere tulemast",
     title: "Seame su töökoha valmis,",
@@ -76,7 +95,10 @@ export const et = {
     allDone: "Kõik on tehtud.",
     nothing: "Veel pole midagi määratud. HR või juht lisab ülesanded.",
   },
-  team: { onlyManagers: "See leht on ainult juhtidele.", empty: "Sulle ei allu veel kedagi. HR saab inimesi sinu meeskonda lisada." },
+  team: {
+    onlyManagers: "See leht on ainult juhtidele.",
+    empty: "Sulle ei allu veel kedagi. HR saab inimesi sinu meeskonda lisada.",
+  },
   hr: {
     onlyHr: "See leht on ainult HR-ile.",
     tabs: { progress: "Edenemine", library: "Teek", people: "Inimesed ja rollid" },
@@ -93,13 +115,15 @@ export const et = {
     current: "Praegu määratud",
     none: "Veel pole midagi määratud.",
     remove: "Eemalda",
+    removeItem: (title: string) => `Eemalda „${title}”`,
     dueDate: "Tähtaeg",
     addCourses: "Lisa koolitusi",
     addDocuments: "Lisa dokumente",
     allCourses: "Kõik koolitused on määratud.",
     allDocuments: "Kõik dokumendid on määratud.",
     button: (n: number) => (n ? `Määra ${n} tegevus${n === 1 ? "" : "t"}` : "Määra"),
-    added: (n: number, name: string) => `${name} nimekirja lisati ${n} tegevus${n === 1 ? "" : "t"}`,
+    added: (n: number, name: string) =>
+      `${name} nimekirja lisati ${n} tegevus${n === 1 ? "" : "t"}`,
   },
   library: {
     courses: "Koolitused",
@@ -118,6 +142,7 @@ export const et = {
     documentAdded: "Dokument lisatud",
     pdfAttached: "PDF lisatud",
     delete: "Kustuta",
+    deleteItem: (title: string) => `Kustuta „${title}”`,
     confirmDelete: (t: string) => `Kas kustutada „${t}”? See eemaldatakse ka kõigi nimekirjadest.`,
     sign: "allkiri",
     read: "lugemine",
@@ -127,6 +152,12 @@ export const et = {
     pages: "Lehekülgi",
     needsSignature: "Vajab allkirja",
     defaultCategory: "Sisseelamine",
+  },
+  errors: {
+    generic: "Midagi läks valesti. Proovi uuesti.",
+    invalidInput: "Kontrolli sisestatud andmeid.",
+    pdfOnly: "Lubatud on ainult PDF-failid.",
+    pdfTooLarge: (maxMegabytes: number) => `PDF-fail võib olla kuni ${maxMegabytes} MB.`,
   },
   people: { selfHr: "Sa ei saa enda HR-rolli eemaldada", manager: "Juht", none: "Puudub" },
 };

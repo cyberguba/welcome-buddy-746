@@ -24,6 +24,10 @@ jobs:
 
       - run: npm ci
 
+      - run: npm run lint
+
+      - run: npm test
+
       # Static SPA build (see vite.config.ts). Plain `npm run build` is the Lovable SSR build and won't run on SWA.
       # VITE_* values are baked into the browser bundle; set them under repo Settings → Secrets and variables → Actions.
       - run: npm run build:azure

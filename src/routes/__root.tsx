@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LanguageProvider } from "@/shared/i18n";
-import { AuthProvider } from "@/features/auth/AuthContext";
+import { AuthProvider } from "@/features/auth/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { AppShell } from "@/shared/layout/AppShell";
 
@@ -82,9 +82,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Postimees sisseelamine" },
-      { name: "description", content: "Uue töötaja sisseelamise keskkond dokumentide ja koolitustega." },
+      {
+        name: "description",
+        content: "Uue töötaja sisseelamise keskkond dokumentide ja koolitustega.",
+      },
       { property: "og:title", content: "Postimees sisseelamine" },
-      { property: "og:description", content: "Uue töötaja sisseelamise keskkond dokumentide ja koolitustega." },
+      {
+        property: "og:description",
+        content: "Uue töötaja sisseelamise keskkond dokumentide ja koolitustega.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -96,7 +102,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.png", type: "image/png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -126,12 +135,12 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <LanguageProvider>
-      <AuthProvider>
-        <AppShell>
-          <Outlet />
-        </AppShell>
-      <Toaster richColors position="top-center" />
-      </AuthProvider>
+        <AuthProvider>
+          <AppShell>
+            <Outlet />
+          </AppShell>
+          <Toaster richColors position="top-center" />
+        </AuthProvider>
       </LanguageProvider>
     </QueryClientProvider>
   );

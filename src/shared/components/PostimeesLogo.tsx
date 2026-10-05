@@ -4,7 +4,13 @@ const LOGO_PATH =
 
 export function PostimeesLogo({ className }: { className?: string }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 80" role="img" aria-label="Postimees Grupp" className={className}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 420 80"
+      role="img"
+      aria-label="Postimees Grupp"
+      className={className}
+    >
       <path fill="currentColor" d={LOGO_PATH} />
     </svg>
   );

@@ -9,8 +9,8 @@ export function ContactsPage() {
     <section className="mt-7">
       <SectionHeader title={t.contacts.title} meta={t.contacts.count(CONTACTS.length)} />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {CONTACTS.map((c) => (
-          <ContactCard key={c.email} contact={c} />
+        {CONTACTS.map((contact) => (
+          <ContactCard key={contact.email} contact={contact} />
         ))}
       </div>
     </section>

@@ -1,8 +1,8 @@
 import { useT } from "@/shared/i18n";
-import { cn } from "@/lib/utils";
 import type { StatusFilter } from "@/shared/types/induction";
+import { PillToggleGroup } from "./PillToggleGroup";
 
-const OPTIONS: StatusFilter[] = ["All", "Pending", "Completed"];
+const STATUS_FILTERS: StatusFilter[] = ["All", "Pending", "Completed"];
 
 interface StatusFilterBarProps {
   value: StatusFilter;
@@ -11,21 +11,13 @@ interface StatusFilterBarProps {
 
 export function StatusFilterBar({ value, onChange }: StatusFilterBarProps) {
   const { t } = useT();
+  const options = STATUS_FILTERS.map((filter) => ({ value: filter, label: t.filters[filter] }));
   return (
-    <div className="mb-4 flex gap-2">
-      {OPTIONS.map((option) => (
-        <button
-          key={option}
-          type="button"
-          onClick={() => onChange(option)}
-          className={cn(
-            "rounded-full px-3 py-1.5 text-[12px] font-semibold transition",
-            value === option ? "bg-foreground text-background" : "glass text-muted-foreground shadow-none",
-          )}
-        >
-          {t.filters[option]}
-        </button>
-      ))}
-    </div>
+    <PillToggleGroup
+      options={options}
+      value={value}
+      onChange={onChange}
+      ariaLabel={t.common.progress}
+    />
   );
 }

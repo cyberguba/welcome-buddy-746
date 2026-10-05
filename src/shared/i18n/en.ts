@@ -1,10 +1,24 @@
 import type { Dict } from "./et";
 
 export const en: Dict = {
-  nav: { overview: "Overview", plan: "My plan", documents: "Documents", courses: "Courses", contacts: "Contacts", team: "My team", hr: "HR admin" },
-  header: { onboarding: "Onboarding", viewingAs: "Viewing as", viewAsAria: "View the app as", language: "Language" },
+  nav: {
+    overview: "Overview",
+    plan: "My plan",
+    documents: "Documents",
+    courses: "Courses",
+    contacts: "Contacts",
+    team: "My team",
+    hr: "HR admin",
+  },
+  header: {
+    onboarding: "Onboarding",
+    viewingAs: "Viewing as",
+    viewAsAria: "View the app as",
+    language: "Language",
+  },
   roles: { hr: "HR", manager: "Manager", employee: "Employee" },
-  footer: "Need a hand? Reach your buddy or the People team at personal@postimees.ee — we're here for your first 90 days.",
+  footer:
+    "Need a hand? Reach your buddy or the People team at personal@postimees.ee — we're here for your first 90 days.",
   filters: { All: "All", Pending: "Pending", Completed: "Completed" },
   common: {
     completedOf: (d, t) => `${d} of ${t} completed`,
@@ -22,6 +36,7 @@ export const en: Dict = {
     doc: "Doc",
     untitled: "Untitled",
     nothing: "Nothing here.",
+    progress: "Progress",
   },
   course: {
     completed: "Completed",
@@ -78,7 +93,10 @@ export const en: Dict = {
     allDone: "Everything is completed.",
     nothing: "Nothing assigned yet. HR or the manager will add tasks.",
   },
-  team: { onlyManagers: "This page is only for managers.", empty: "No one reports to you yet. HR can add people to your team." },
+  team: {
+    onlyManagers: "This page is only for managers.",
+    empty: "No one reports to you yet. HR can add people to your team.",
+  },
   hr: {
     onlyHr: "This page is only for HR.",
     tabs: { progress: "Progress", library: "Library", people: "People & roles" },
@@ -95,6 +113,7 @@ export const en: Dict = {
     current: "Currently assigned",
     none: "Nothing assigned yet.",
     remove: "Remove",
+    removeItem: (title) => `Remove "${title}"`,
     dueDate: "Due date",
     addCourses: "Add courses",
     addDocuments: "Add documents",
@@ -120,6 +139,7 @@ export const en: Dict = {
     documentAdded: "Document added",
     pdfAttached: "PDF attached",
     delete: "Delete",
+    deleteItem: (title) => `Delete "${title}"`,
     confirmDelete: (t) => `Delete "${t}"? It will also be removed from everyone's list.`,
     sign: "sign",
     read: "read",
@@ -129,6 +149,12 @@ export const en: Dict = {
     pages: "Pages",
     needsSignature: "Needs signature",
     defaultCategory: "Onboarding",
+  },
+  errors: {
+    generic: "Something went wrong. Please try again.",
+    invalidInput: "Please check the values you entered.",
+    pdfOnly: "Only PDF files are allowed.",
+    pdfTooLarge: (maxMegabytes) => `The PDF can be at most ${maxMegabytes} MB.`,
   },
   people: { selfHr: "You can't remove your own HR role", manager: "Manager", none: "None" },
 };

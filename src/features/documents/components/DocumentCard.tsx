@@ -1,38 +1,43 @@
-import { useT } from "@/shared/i18n";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useT } from "@/shared/i18n";
 import { cn } from "@/lib/utils";
-import { dueLabel, isOverdue } from "@/shared/lib/format";
+import type { Assignment } from "@/shared/api/types";
+import { COMPLETE_PROGRESS, getAssignmentStatus } from "@/shared/lib/assignments";
+import { formatDueLabel } from "@/shared/lib/format";
 import { useUpdateProgress } from "@/features/assignments/use-my-assignments";
-import { documentFileUrlQuery, type Assignment } from "@/shared/api/induction-api";
+import { PdfViewer } from "./PdfViewer";
 
-function PdfViewer({ path }: { path: string }) {
-  const { t } = useT();
-  const { data: url, isLoading } = useQuery(documentFileUrlQuery(path));
-  if (isLoading || !url) return <div className="mt-4 text-[12px] text-muted-foreground">{t.documents.loadingPdf}</div>;
-  return (
-    <div className="mt-4 space-y-2">
-      <iframe src={url} title={t.documents.pdfTitle} className="h-[480px] w-full rounded-xl bg-card ring-1 ring-border" />
-      <a href={url} target="_blank" rel="noreferrer" className="text-[12px] font-semibold text-primary underline underline-offset-4">
-        {t.documents.openPdf}
-      </a>
-    </div>
-  );
-}
+type DocumentBadge = "completed" | "overdue" | "pending";
+
+const BADGE_CLASS: Record<DocumentBadge, string> = {
+  completed: "bg-success/15 text-success",
+  overdue: "bg-destructive/15 text-destructive",
+  pending: "bg-warning/15 text-warning",
+};
 
 export function DocumentCard({ assignment }: { assignment: Assignment }) {
-  const document = assignment.document;
-  const update = useUpdateProgress();
+  const updateProgress = useUpdateProgress();
   const { t, lang } = useT();
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const document = assignment.document;
   if (!document) return null;
-  const completed = assignment.progress >= 100;
-  const completedLabel = document.requires_signature ? t.documents.signed : t.documents.read;
-  const overdue = isOverdue(assignment.due_date, assignment.progress);
 
-  const confirm = () => {
-    update.mutate({ id: assignment.id, progress: 100 });
-    setOpen(false);
+  const status = getAssignmentStatus(assignment);
+  const isCompleted = status === "done";
+  const badge: DocumentBadge = isCompleted
+    ? "completed"
+    : status === "overdue"
+      ? "overdue"
+      : "pending";
+  const badgeLabels: Record<DocumentBadge, string> = {
+    completed: document.requires_signature ? t.documents.signed : t.documents.read,
+    overdue: t.common.overdue,
+    pending: t.common.pending,
+  };
+
+  const confirmDocument = () => {
+    updateProgress.mutate({ assignmentId: assignment.id, progress: COMPLETE_PROGRESS });
+    setIsOpen(false);
   };
 
   return (
@@ -42,35 +47,52 @@ export function DocumentCard({ assignment }: { assignment: Assignment }) {
         <span
           className={cn(
             "shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide",
-            completed ? "bg-success/15 text-success" : overdue ? "bg-destructive/15 text-destructive" : "bg-warning/15 text-warning",
+            BADGE_CLASS[badge],
           )}
         >
-          {completed ? completedLabel : overdue ? t.common.overdue : t.common.pending}
+          {badgeLabels[badge]}
         </span>
       </div>
-      <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground">{document.description}</p>
+      <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground">
+        {document.description}
+      </p>
       <div className="mt-1 text-[11px] text-muted-foreground">
-        {t.documents.pages(document.pages)} · {dueLabel(assignment.due_date, lang)}
+        {t.documents.pages(document.pages)} · {formatDueLabel(assignment.due_date, lang)}
       </div>
 
-      {open && document.file_path && <PdfViewer path={document.file_path} />}
-      {open && !document.file_path && (
+      {isOpen && document.file_path && <PdfViewer filePath={document.file_path} />}
+      {isOpen && !document.file_path && (
         <div className="mt-4 rounded-xl bg-card/70 p-4 text-[12px] leading-relaxed text-muted-foreground ring-1 ring-border">
           {t.documents.preview(document.title)}
         </div>
       )}
 
       <div className="mt-4 flex items-center gap-3">
-        {completed ? (
-          <button type="button" onClick={() => setOpen(!open)} className="text-[12px] font-semibold text-muted-foreground underline decoration-border underline-offset-4">
-            {open ? t.documents.hide : t.documents.view}
+        {isCompleted ? (
+          <button
+            type="button"
+            aria-expanded={isOpen}
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-[12px] font-semibold text-muted-foreground underline decoration-border underline-offset-4"
+          >
+            {isOpen ? t.documents.hide : t.documents.view}
           </button>
-        ) : open ? (
-          <button type="button" disabled={update.isPending} onClick={confirm} className="rounded-lg bg-primary px-3 py-1.5 text-[12px] font-semibold text-primary-foreground shadow-primary transition hover:opacity-90">
+        ) : isOpen ? (
+          <button
+            type="button"
+            disabled={updateProgress.isPending}
+            onClick={confirmDocument}
+            className="rounded-lg bg-primary px-3 py-1.5 text-[12px] font-semibold text-primary-foreground shadow-primary transition hover:opacity-90"
+          >
             {document.requires_signature ? t.documents.sign : t.documents.markRead}
           </button>
         ) : (
-          <button type="button" onClick={() => setOpen(true)} className="rounded-lg bg-accent px-3 py-1.5 text-[12px] font-semibold text-accent-foreground transition hover:bg-primary/20">
+          <button
+            type="button"
+            aria-expanded={isOpen}
+            onClick={() => setIsOpen(true)}
+            className="rounded-lg bg-accent px-3 py-1.5 text-[12px] font-semibold text-accent-foreground transition hover:bg-primary/20"
+          >
             {document.requires_signature ? t.documents.reviewSign : t.documents.readBtn}
           </button>
         )}
