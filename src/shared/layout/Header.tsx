@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import logo from "@/assets/postimees-logo.png.asset.json";
+import logoUrl from "@/assets/postimees-logo.png";
 import { useAuth } from "@/features/auth/use-auth";
 import { initials } from "@/shared/lib/format";
 import { useT } from "@/shared/i18n";
@@ -23,7 +23,7 @@ export function Header() {
     <>
       <header className="glass grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 rounded-2xl px-4 py-3 sm:px-5 md:flex md:justify-between">
         <Link to="/" className="flex shrink-0 items-center gap-3">
-          <img src={logo.url} alt="Postimees Grupp" width={892} height={122} decoding="async" className="h-5 w-auto max-w-none shrink-0 object-contain sm:h-7" />
+          <img src={logoUrl} alt="Postimees Grupp" width={892} height={122} decoding="async" className="h-5 w-auto max-w-none shrink-0 object-contain sm:h-7" />
           <div className="hidden whitespace-nowrap border-l border-border pl-3 text-[11px] font-medium text-muted-foreground sm:block md:hidden xl:block">{t.header.onboarding}</div>
         </Link>
 
