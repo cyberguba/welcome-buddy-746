@@ -24,13 +24,13 @@ export function PlanSummaryCard({ title, assignments }: PlanSummaryCardProps) {
   const lastDueDate = getLastDueDate(assignments);
 
   return (
-    <div className="glass-strong animate-rise rounded-[28px] p-6">
-      <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
+    <div className="glass-strong animate-rise rounded-[1.75rem] p-6">
+      <div className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-primary">
         {t.plan.kicker}
       </div>
-      <h1 className="mt-1 font-display text-[24px] font-bold">{title}</h1>
+      <h1 className="mt-1 font-display text-[1.5rem] font-bold">{title}</h1>
       <div className="mt-4 flex flex-wrap items-end gap-6">
-        <div className="font-display text-[32px] font-extrabold leading-none text-primary">
+        <div className="font-display text-[2rem] font-extrabold leading-none text-primary">
           {summary.percentDone}%
         </div>
         <PlanStat label={t.plan.done} value={`${summary.doneCount}/${summary.totalCount}`} />
@@ -60,12 +60,14 @@ interface PlanStatProps {
 function PlanStat({ label, value, isWarning = false }: PlanStatProps) {
   return (
     <div>
-      <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+      <div className="text-[0.625rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
         {label}
       </div>
       <div
         className={
-          isWarning ? "text-[14px] font-semibold text-destructive" : "text-[14px] font-semibold"
+          isWarning
+            ? "text-[0.875rem] font-semibold text-destructive"
+            : "text-[0.875rem] font-semibold"
         }
       >
         {value}

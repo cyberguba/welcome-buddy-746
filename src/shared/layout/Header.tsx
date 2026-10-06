@@ -19,12 +19,12 @@ export function Header() {
       <header className="glass grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 rounded-2xl px-4 py-3 sm:px-5 md:flex md:justify-between">
         <Link to="/" className="flex shrink-0 items-center gap-3">
           <PostimeesLogo className="h-5 w-auto shrink-0 text-foreground sm:h-7" />
-          <div className="hidden whitespace-nowrap border-l border-border pl-3 text-[11px] font-medium text-muted-foreground sm:block md:hidden xl:block">
+          <div className="hidden whitespace-nowrap border-l border-border pl-3 text-[0.6875rem] font-medium text-muted-foreground sm:block md:hidden xl:block">
             {t.header.onboarding}
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-5 whitespace-nowrap text-[13px] font-medium text-muted-foreground md:flex">
+        <nav className="hidden items-center gap-5 whitespace-nowrap text-[0.8125rem] font-medium text-muted-foreground md:flex">
           {navItems.map((item) => (
             <Link
               key={item.to}
@@ -43,7 +43,7 @@ export function Header() {
           <LanguageMenu />
           <div
             aria-hidden
-            className="hidden size-9 shrink-0 place-items-center rounded-full bg-accent text-[12px] font-bold text-accent-foreground ring-1 ring-border sm:grid"
+            className="hidden size-9 shrink-0 place-items-center rounded-full bg-accent text-[0.75rem] font-bold text-accent-foreground ring-1 ring-border sm:grid"
           >
             {getInitials(profile?.full_name ?? "")}
           </div>
@@ -57,7 +57,7 @@ export function Header() {
               key={item.to}
               to={item.to}
               activeOptions={{ exact: true }}
-              className="glass rounded-full px-3 py-1.5 text-[12px] font-medium text-muted-foreground shadow-none"
+              className="glass rounded-full px-3 py-1.5 text-[0.75rem] font-medium text-muted-foreground shadow-none"
               activeProps={{ className: "text-primary" }}
             >
               {t.nav[item.labelKey]}

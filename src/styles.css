@@ -119,6 +119,29 @@
 }
 
 @layer base {
+  /*
+   * Large screens scale the whole UI up a little: sizes are in rem, so changing the root
+   * font size grows text, spacing and the content width together and keeps the look the same.
+   * Percentages (not px) keep the visitor's own browser font-size preference.
+   */
+  html {
+    font-size: 100%;
+  }
+  @media (min-width: 1536px) {
+    html {
+      font-size: 106.25%;
+    }
+  }
+  @media (min-width: 1920px) {
+    html {
+      font-size: 112.5%;
+    }
+  }
+  @media (min-width: 2560px) {
+    html {
+      font-size: 125%;
+    }
+  }
   * {
     border-color: var(--color-border);
   }

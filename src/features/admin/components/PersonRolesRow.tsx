@@ -21,9 +21,9 @@ export function PersonRolesRow({ person, roles, managerOptions }: PersonRolesRow
 
   return (
     <div className="flex flex-wrap items-center gap-4 border-b border-border px-5 py-4 last:border-0">
-      <div className="min-w-[180px] flex-1">
-        <div className="text-[13px] font-semibold">{displayName}</div>
-        <div className="text-[11px] text-muted-foreground">{person.email}</div>
+      <div className="min-w-[11.25rem] flex-1">
+        <div className="text-[0.8125rem] font-semibold">{displayName}</div>
+        <div className="text-[0.6875rem] text-muted-foreground">{person.email}</div>
       </div>
       <div role="group" aria-label={displayName} className="flex gap-1.5">
         {ROLES_BY_RANK.map((role) => {
@@ -40,7 +40,7 @@ export function PersonRolesRow({ person, roles, managerOptions }: PersonRolesRow
                 setUserRole.mutate({ userId: person.id, role, shouldHaveRole: !hasRole })
               }
               className={cn(
-                "rounded-full px-3 py-1 text-[11px] font-semibold transition disabled:cursor-not-allowed",
+                "rounded-full px-3 py-1 text-[0.6875rem] font-semibold transition disabled:cursor-not-allowed",
                 hasRole ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground",
               )}
               title={isOwnHrRole ? t.people.selfHr : undefined}
@@ -50,14 +50,14 @@ export function PersonRolesRow({ person, roles, managerOptions }: PersonRolesRow
           );
         })}
       </div>
-      <label className="text-[11px] text-muted-foreground">
+      <label className="text-[0.6875rem] text-muted-foreground">
         {t.people.manager}{" "}
         <select
           value={person.manager_id ?? ""}
           onChange={(event) =>
             updateManager.mutate({ userId: person.id, managerId: event.target.value || null })
           }
-          className="ml-1 rounded-lg bg-card px-2 py-1 text-[12px] text-foreground ring-1 ring-border"
+          className="ml-1 rounded-lg bg-card px-2 py-1 text-[0.75rem] text-foreground ring-1 ring-border"
         >
           <option value="">{t.people.none}</option>
           {managerOptions.map((manager) => (

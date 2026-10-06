@@ -21,13 +21,13 @@ export function PlanTimeline({ assignments }: { assignments: Assignment[] }) {
             <span aria-hidden className={cn("size-2 rounded-full", TONE_DOT_CLASS[group.tone])} />
             <h2
               className={cn(
-                "font-display text-[14px] font-bold",
+                "font-display text-[0.875rem] font-bold",
                 group.tone === "overdue" && "text-destructive",
               )}
             >
               {group.label}
             </h2>
-            <span className="text-[11px] text-muted-foreground">
+            <span className="text-[0.6875rem] text-muted-foreground">
               {t.common.items(group.items.length)}
             </span>
           </div>

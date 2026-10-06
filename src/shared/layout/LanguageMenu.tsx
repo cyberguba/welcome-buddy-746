@@ -15,14 +15,14 @@ export function LanguageMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger
         aria-label={t.header.language}
-        className="flex items-center gap-1 rounded-full px-2 py-1.5 text-[11px] font-semibold uppercase text-muted-foreground outline-none transition hover:bg-muted hover:text-foreground"
+        className="flex items-center gap-1 rounded-full px-2 py-1.5 text-[0.6875rem] font-semibold uppercase text-muted-foreground outline-none transition hover:bg-muted hover:text-foreground"
       >
         <Globe className="size-4" />
         {lang}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {(Object.keys(NAMES) as Lang[]).map((l) => (
-          <DropdownMenuItem key={l} onSelect={() => setLang(l)} className="gap-2 text-[13px]">
+          <DropdownMenuItem key={l} onSelect={() => setLang(l)} className="gap-2 text-[0.8125rem]">
             <Check className={lang === l ? "size-4 text-primary" : "size-4 opacity-0"} />
             {NAMES[l]}
           </DropdownMenuItem>

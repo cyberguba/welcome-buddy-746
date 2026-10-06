@@ -32,12 +32,12 @@ export function CourseCard({ assignment }: { assignment: Assignment }) {
       />
       <div className="p-5">
         <div className="flex items-center justify-between">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">
+          <div className="text-[0.625rem] font-semibold uppercase tracking-[0.14em] text-primary">
             {course.category}
           </div>
           <div
             className={cn(
-              "text-[10px] font-medium",
+              "text-[0.625rem] font-medium",
               isOverdue ? "text-destructive" : "text-muted-foreground",
             )}
           >
@@ -45,16 +45,16 @@ export function CourseCard({ assignment }: { assignment: Assignment }) {
             {formatDueLabel(assignment.due_date, lang)}
           </div>
         </div>
-        <h3 className="mt-1 font-display text-[14px] font-bold">{course.title}</h3>
+        <h3 className="mt-1 font-display text-[0.875rem] font-bold">{course.title}</h3>
         {course.description && (
-          <p className="mt-1 text-[12px] text-muted-foreground">{course.description}</p>
+          <p className="mt-1 text-[0.75rem] text-muted-foreground">{course.description}</p>
         )}
         <div className="mt-3">
           <ProgressBar percent={progress} label={course.title} />
         </div>
         <div
           className={cn(
-            "mt-2 text-[11px] font-medium",
+            "mt-2 text-[0.6875rem] font-medium",
             isDone ? "text-success" : "text-muted-foreground",
           )}
         >
@@ -70,7 +70,7 @@ export function CourseCard({ assignment }: { assignment: Assignment }) {
                 progress: progress + COURSE_PROGRESS_STEP,
               })
             }
-            className="mt-4 rounded-lg bg-accent px-3 py-1.5 text-[12px] font-semibold text-accent-foreground transition hover:bg-primary/20 disabled:opacity-60"
+            className="mt-4 rounded-lg bg-accent px-3 py-1.5 text-[0.75rem] font-semibold text-accent-foreground transition hover:bg-primary/20 disabled:opacity-60"
           >
             {progress === 0 ? t.course.start : t.course.continue}
           </button>

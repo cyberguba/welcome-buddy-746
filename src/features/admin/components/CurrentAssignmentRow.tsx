@@ -13,11 +13,11 @@ export function CurrentAssignmentRow({ assignment }: { assignment: Assignment })
 
   return (
     <div className="flex items-center gap-3 rounded-xl bg-muted px-3 py-2">
-      <span className="w-16 text-[10px] font-semibold uppercase text-primary">
+      <span className="w-16 text-[0.625rem] font-semibold uppercase text-primary">
         {assignment.course ? t.common.course : t.common.doc}
       </span>
-      <span className="flex-1 text-[13px]">{title}</span>
-      <span className="text-[11px] text-muted-foreground">
+      <span className="flex-1 text-[0.8125rem]">{title}</span>
+      <span className="text-[0.6875rem] text-muted-foreground">
         {isAssignmentComplete(assignment) ? t.common.done : `${assignment.progress}%`}
       </span>
       <input
@@ -28,7 +28,7 @@ export function CurrentAssignmentRow({ assignment }: { assignment: Assignment })
             updateDueDate.mutate({ assignmentId: assignment.id, dueDate: event.target.value });
           }
         }}
-        className="rounded-lg bg-card px-2 py-1 text-[11px] ring-1 ring-border"
+        className="rounded-lg bg-card px-2 py-1 text-[0.6875rem] ring-1 ring-border"
         aria-label={`${t.assign.dueDate}: ${title}`}
         title={formatDueLabel(assignment.due_date, lang)}
       />
@@ -37,7 +37,7 @@ export function CurrentAssignmentRow({ assignment }: { assignment: Assignment })
         onClick={() => deleteAssignment.mutate(assignment.id)}
         disabled={deleteAssignment.isPending}
         aria-label={t.assign.removeItem(title)}
-        className="text-[11px] font-semibold text-destructive"
+        className="text-[0.6875rem] font-semibold text-destructive"
       >
         {t.assign.remove}
       </button>

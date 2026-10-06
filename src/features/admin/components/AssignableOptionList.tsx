@@ -22,7 +22,7 @@ export function AssignableOptionList({
 }: AssignableOptionListProps) {
   return (
     <fieldset>
-      <legend className="mb-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+      <legend className="mb-2 text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
         {title}
       </legend>
       <div className="space-y-2">
@@ -37,12 +37,12 @@ export function AssignableOptionList({
               onChange={() => onToggle({ kind: option.kind, id: option.id })}
               className="accent-primary"
             />
-            <span className="flex-1 text-[13px] font-medium">{option.title}</span>
-            <span className="text-[11px] text-muted-foreground">{option.meta}</span>
+            <span className="flex-1 text-[0.8125rem] font-medium">{option.title}</span>
+            <span className="text-[0.6875rem] text-muted-foreground">{option.meta}</span>
           </label>
         ))}
         {options.length === 0 && (
-          <p className="text-[12px] text-muted-foreground">{emptyMessage}</p>
+          <p className="text-[0.75rem] text-muted-foreground">{emptyMessage}</p>
         )}
       </div>
     </fieldset>
