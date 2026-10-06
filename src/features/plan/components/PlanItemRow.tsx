@@ -26,7 +26,7 @@ export function PlanItemRow({ assignment }: { assignment: Assignment }) {
     >
       <span
         className={cn(
-          "w-20 shrink-0 text-[10px] font-semibold uppercase tracking-[0.14em]",
+          "w-20 shrink-0 text-[0.625rem] font-semibold uppercase tracking-[0.14em]",
           isDocument ? "text-warning" : "text-primary",
         )}
       >
@@ -34,19 +34,21 @@ export function PlanItemRow({ assignment }: { assignment: Assignment }) {
       </span>
       <span
         className={cn(
-          "min-w-[160px] flex-1 text-[13px] font-semibold",
+          "min-w-[10rem] flex-1 text-[0.8125rem] font-semibold",
           status === "done" && "text-muted-foreground line-through",
         )}
       >
         {title}
       </span>
-      <span className="w-24 text-[11px] text-muted-foreground">
+      <span className="w-24 text-[0.6875rem] text-muted-foreground">
         {formatDueLabel(assignment.due_date, lang)}
       </span>
       <span className="w-28">
         <ProgressBar percent={assignment.progress} label={title} />
       </span>
-      <span className={cn("w-24 text-right text-[11px] font-semibold", STATUS_TEXT_CLASS[status])}>
+      <span
+        className={cn("w-24 text-right text-[0.6875rem] font-semibold", STATUS_TEXT_CLASS[status])}
+      >
         {t.common[status]}
       </span>
     </Link>

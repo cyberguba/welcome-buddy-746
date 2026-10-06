@@ -16,14 +16,14 @@ export function LibraryItemRow({ title, meta, isDeleting, onDelete }: LibraryIte
 
   return (
     <div className="flex items-center gap-3 rounded-xl bg-card/70 px-3 py-2 ring-1 ring-border">
-      <span className="flex-1 text-[13px] font-medium">{title}</span>
-      <span className="text-[11px] text-muted-foreground">{meta}</span>
+      <span className="flex-1 text-[0.8125rem] font-medium">{title}</span>
+      <span className="text-[0.6875rem] text-muted-foreground">{meta}</span>
       <button
         type="button"
         onClick={confirmAndDelete}
         disabled={isDeleting}
         aria-label={t.library.deleteItem(title)}
-        className="text-[11px] font-semibold text-destructive"
+        className="text-[0.6875rem] font-semibold text-destructive"
       >
         {t.library.delete}
       </button>

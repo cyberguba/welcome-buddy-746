@@ -30,7 +30,7 @@ export function PillToggleGroup<T extends string>({
             aria-pressed={isSelected}
             onClick={() => onChange(option.value)}
             className={cn(
-              "rounded-full px-3 py-1.5 text-[12px] font-semibold transition",
+              "rounded-full px-3 py-1.5 text-[0.75rem] font-semibold transition",
               isSelected
                 ? "bg-foreground text-background"
                 : "glass text-muted-foreground shadow-none",

@@ -13,7 +13,7 @@ export function AttachPdfButton({ documentId, hasPdf }: AttachPdfButtonProps) {
 
   return (
     // The file input is visually hidden but stays focusable, so the label works from the keyboard too.
-    <label className="ml-3 inline-flex cursor-pointer items-center gap-1 text-[11px] font-semibold text-primary focus-within:underline">
+    <label className="ml-3 inline-flex cursor-pointer items-center gap-1 text-[0.6875rem] font-semibold text-primary focus-within:underline">
       {hasPdf ? t.library.replacePdf : t.library.attachPdf}
       <input
         type="file"

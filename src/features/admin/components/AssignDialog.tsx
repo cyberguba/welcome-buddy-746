@@ -86,11 +86,11 @@ export function AssignDialog({ employee, onClose }: AssignDialogProps) {
         </DialogHeader>
 
         <div>
-          <h3 className="mb-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+          <h3 className="mb-2 text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
             {t.assign.current}
           </h3>
           {currentAssignments.length === 0 && (
-            <p className="text-[12px] text-muted-foreground">{t.assign.none}</p>
+            <p className="text-[0.75rem] text-muted-foreground">{t.assign.none}</p>
           )}
           <div className="space-y-2">
             {currentAssignments.map((assignment) => (
@@ -117,20 +117,20 @@ export function AssignDialog({ employee, onClose }: AssignDialogProps) {
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          <label className="text-[12px] font-medium text-muted-foreground">
+          <label className="text-[0.75rem] font-medium text-muted-foreground">
             {t.assign.dueDate}{" "}
             <input
               type="date"
               value={dueDate}
               onChange={(event) => setDueDate(event.target.value)}
-              className="ml-2 rounded-lg bg-card px-2 py-1.5 text-[12px] ring-1 ring-border"
+              className="ml-2 rounded-lg bg-card px-2 py-1.5 text-[0.75rem] ring-1 ring-border"
             />
           </label>
           <button
             type="button"
             disabled={selectedItems.length === 0 || createAssignments.isPending}
             onClick={assignSelectedItems}
-            className="ml-auto rounded-xl bg-primary px-5 py-2 text-[13px] font-semibold text-primary-foreground shadow-primary transition hover:opacity-90 disabled:opacity-50"
+            className="ml-auto rounded-xl bg-primary px-5 py-2 text-[0.8125rem] font-semibold text-primary-foreground shadow-primary transition hover:opacity-90 disabled:opacity-50"
           >
             {t.assign.button(selectedItems.length)}
           </button>

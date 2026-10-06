@@ -15,13 +15,13 @@ export function ViewAsPicker() {
 
   return (
     <label className="min-w-0 text-right">
-      <span className="hidden text-[10px] font-medium uppercase tracking-wide text-muted-foreground sm:block">
+      <span className="hidden text-[0.625rem] font-medium uppercase tracking-wide text-muted-foreground sm:block">
         {t.header.viewingAs}
       </span>
       <select
         value={userId}
         onChange={(event) => setViewAs(event.target.value)}
-        className="w-full max-w-[170px] truncate bg-transparent text-right text-[12px] font-semibold outline-none"
+        className="w-full max-w-[10.625rem] truncate bg-transparent text-right text-[0.75rem] font-semibold outline-none"
         aria-label={t.header.viewAsAria}
       >
         {people.map((person) => (

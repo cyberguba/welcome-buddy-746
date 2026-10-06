@@ -46,7 +46,7 @@ export function DocumentLibrary() {
 
   return (
     <div className="glass rounded-2xl p-5">
-      <h3 className="font-display text-[15px] font-bold">{t.library.documents}</h3>
+      <h3 className="font-display text-[0.9375rem] font-bold">{t.library.documents}</h3>
       <div className="mt-3 space-y-2">
         {documents.map((document) => (
           <div key={document.id} className="space-y-1">
@@ -61,7 +61,7 @@ export function DocumentLibrary() {
         ))}
       </div>
       <form onSubmit={submitDocument} className="mt-5 space-y-2 border-t border-border pt-4">
-        <div className="text-[12px] font-semibold text-muted-foreground">
+        <div className="text-[0.75rem] font-semibold text-muted-foreground">
           {t.library.newDocument}
         </div>
         <input
@@ -97,7 +97,7 @@ export function DocumentLibrary() {
             onChange={(event) => updateDocumentForm({ pages: Number(event.target.value) })}
             aria-label={t.library.pages}
           />
-          <label className="flex items-center gap-2 text-[12px]">
+          <label className="flex items-center gap-2 text-[0.75rem]">
             <input
               type="checkbox"
               className="accent-primary"

@@ -37,7 +37,7 @@ export function PlanPage({ viewedUserId }: PlanPageProps) {
     <section className="mt-7">
       <PlanSummaryCard title={title} assignments={assignments} />
 
-      <label className="mt-6 mb-4 inline-flex cursor-pointer items-center gap-2 text-[12px] font-medium text-muted-foreground">
+      <label className="mt-6 mb-4 inline-flex cursor-pointer items-center gap-2 text-[0.75rem] font-medium text-muted-foreground">
         <input
           type="checkbox"
           checked={isHidingDone}
