@@ -1,10 +1,8 @@
 node_modules
 dist
-.output
-.vinxi
-pnpm-lock.yaml
 package-lock.json
-bun.lock
-routeTree.gen.ts
+src/routeTree.gen.ts
 src/components/ui
-src/integrations
+src/integrations/supabase/types.ts
+SOFTWARE_RULES.md
+azure-pipelines.yml

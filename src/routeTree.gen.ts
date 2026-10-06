@@ -9,23 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as AuthRouteImport } from './routes/auth'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContactsRouteImport } from './routes/contacts'
-import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
-import { Route as AuthenticatedCoursesRouteImport } from './routes/_authenticated/courses'
-import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated/documents'
-import { Route as AuthenticatedHrRouteImport } from './routes/_authenticated/hr'
-import { Route as AuthenticatedPlanRouteImport } from './routes/_authenticated/plan'
-import { Route as AuthenticatedTeamRouteImport } from './routes/_authenticated/team'
+import { Route as CoursesRouteImport } from './routes/courses'
+import { Route as DocumentsRouteImport } from './routes/documents'
+import { Route as HrRouteImport } from './routes/hr'
+import { Route as PlanRouteImport } from './routes/plan'
+import { Route as TeamRouteImport } from './routes/team'
 
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactsRoute = ContactsRouteImport.update({
@@ -33,123 +27,94 @@ const ContactsRoute = ContactsRouteImport.update({
   path: '/contacts',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedCoursesRoute = AuthenticatedCoursesRouteImport.update({
+const CoursesRoute = CoursesRouteImport.update({
   id: '/courses',
   path: '/courses',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDocumentsRoute = AuthenticatedDocumentsRouteImport.update({
+const DocumentsRoute = DocumentsRouteImport.update({
   id: '/documents',
   path: '/documents',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedHrRoute = AuthenticatedHrRouteImport.update({
+const HrRoute = HrRouteImport.update({
   id: '/hr',
   path: '/hr',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedPlanRoute = AuthenticatedPlanRouteImport.update({
+const PlanRoute = PlanRouteImport.update({
   id: '/plan',
   path: '/plan',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedTeamRoute = AuthenticatedTeamRouteImport.update({
+const TeamRoute = TeamRouteImport.update({
   id: '/team',
   path: '/team',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AuthenticatedIndexRoute
-  '/auth': typeof AuthRoute
+  '/': typeof IndexRoute
   '/contacts': typeof ContactsRoute
-  '/courses': typeof AuthenticatedCoursesRoute
-  '/documents': typeof AuthenticatedDocumentsRoute
-  '/hr': typeof AuthenticatedHrRoute
-  '/plan': typeof AuthenticatedPlanRoute
-  '/team': typeof AuthenticatedTeamRoute
+  '/courses': typeof CoursesRoute
+  '/documents': typeof DocumentsRoute
+  '/hr': typeof HrRoute
+  '/plan': typeof PlanRoute
+  '/team': typeof TeamRoute
 }
 export interface FileRoutesByTo {
-  '/auth': typeof AuthRoute
+  '/': typeof IndexRoute
   '/contacts': typeof ContactsRoute
-  '/courses': typeof AuthenticatedCoursesRoute
-  '/documents': typeof AuthenticatedDocumentsRoute
-  '/hr': typeof AuthenticatedHrRoute
-  '/plan': typeof AuthenticatedPlanRoute
-  '/team': typeof AuthenticatedTeamRoute
-  '/': typeof AuthenticatedIndexRoute
+  '/courses': typeof CoursesRoute
+  '/documents': typeof DocumentsRoute
+  '/hr': typeof HrRoute
+  '/plan': typeof PlanRoute
+  '/team': typeof TeamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/auth': typeof AuthRoute
+  '/': typeof IndexRoute
   '/contacts': typeof ContactsRoute
-  '/_authenticated/courses': typeof AuthenticatedCoursesRoute
-  '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
-  '/_authenticated/hr': typeof AuthenticatedHrRoute
-  '/_authenticated/plan': typeof AuthenticatedPlanRoute
-  '/_authenticated/team': typeof AuthenticatedTeamRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/courses': typeof CoursesRoute
+  '/documents': typeof DocumentsRoute
+  '/hr': typeof HrRoute
+  '/plan': typeof PlanRoute
+  '/team': typeof TeamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/auth'
-    | '/contacts'
-    | '/courses'
-    | '/documents'
-    | '/hr'
-    | '/plan'
-    | '/team'
+    '/' | '/contacts' | '/courses' | '/documents' | '/hr' | '/plan' | '/team'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/auth'
-    | '/contacts'
-    | '/courses'
-    | '/documents'
-    | '/hr'
-    | '/plan'
-    | '/team'
-    | '/'
+  to: '/' | '/contacts' | '/courses' | '/documents' | '/hr' | '/plan' | '/team'
   id:
     | '__root__'
-    | '/_authenticated'
-    | '/auth'
+    | '/'
     | '/contacts'
-    | '/_authenticated/courses'
-    | '/_authenticated/documents'
-    | '/_authenticated/hr'
-    | '/_authenticated/plan'
-    | '/_authenticated/team'
-    | '/_authenticated/'
+    | '/courses'
+    | '/documents'
+    | '/hr'
+    | '/plan'
+    | '/team'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  AuthRoute: typeof AuthRoute
+  IndexRoute: typeof IndexRoute
   ContactsRoute: typeof ContactsRoute
+  CoursesRoute: typeof CoursesRoute
+  DocumentsRoute: typeof DocumentsRoute
+  HrRoute: typeof HrRoute
+  PlanRoute: typeof PlanRoute
+  TeamRoute: typeof TeamRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
+    '/': {
+      id: '/'
+      path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contacts': {
@@ -159,87 +124,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/': {
-      id: '/_authenticated/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/courses': {
-      id: '/_authenticated/courses'
+    '/courses': {
+      id: '/courses'
       path: '/courses'
       fullPath: '/courses'
-      preLoaderRoute: typeof AuthenticatedCoursesRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/documents': {
-      id: '/_authenticated/documents'
+    '/documents': {
+      id: '/documents'
       path: '/documents'
       fullPath: '/documents'
-      preLoaderRoute: typeof AuthenticatedDocumentsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof DocumentsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/hr': {
-      id: '/_authenticated/hr'
+    '/hr': {
+      id: '/hr'
       path: '/hr'
       fullPath: '/hr'
-      preLoaderRoute: typeof AuthenticatedHrRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof HrRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/plan': {
-      id: '/_authenticated/plan'
+    '/plan': {
+      id: '/plan'
       path: '/plan'
       fullPath: '/plan'
-      preLoaderRoute: typeof AuthenticatedPlanRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof PlanRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/team': {
-      id: '/_authenticated/team'
+    '/team': {
+      id: '/team'
       path: '/team'
       fullPath: '/team'
-      preLoaderRoute: typeof AuthenticatedTeamRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedCoursesRoute: typeof AuthenticatedCoursesRoute
-  AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
-  AuthenticatedHrRoute: typeof AuthenticatedHrRoute
-  AuthenticatedPlanRoute: typeof AuthenticatedPlanRoute
-  AuthenticatedTeamRoute: typeof AuthenticatedTeamRoute
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-}
-
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedCoursesRoute: AuthenticatedCoursesRoute,
-  AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
-  AuthenticatedHrRoute: AuthenticatedHrRoute,
-  AuthenticatedPlanRoute: AuthenticatedPlanRoute,
-  AuthenticatedTeamRoute: AuthenticatedTeamRoute,
-  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-}
-
-const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  AuthRoute: AuthRoute,
+  IndexRoute: IndexRoute,
   ContactsRoute: ContactsRoute,
+  CoursesRoute: CoursesRoute,
+  DocumentsRoute: DocumentsRoute,
+  HrRoute: HrRoute,
+  PlanRoute: PlanRoute,
+  TeamRoute: TeamRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -1,6 +1,6 @@
 import { defineConfig } from "vitest/config";
 
-// Separate from vite.config.ts on purpose: tests need only the "@/" alias, not the Lovable/TanStack build plugins.
+// Separate from vite.config.ts: tests need only the "@/" alias, not the router/React/Tailwind build plugins.
 export default defineConfig({
   resolve: { tsconfigPaths: true },
   test: {

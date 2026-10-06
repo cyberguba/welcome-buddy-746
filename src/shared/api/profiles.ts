@@ -7,7 +7,7 @@ import type { AppRole, RolesByUser } from "./types";
 
 /**
  * Purpose: reads and writes people (profiles) and their roles.
- * Constraints: access is enforced by row-level security in Lovable Cloud, not here.
+ * Constraints: access is enforced by row-level security in Supabase, not here.
  */
 export const profileWithRolesQuery = (userId: string) =>
   queryOptions({

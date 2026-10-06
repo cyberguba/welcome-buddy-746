@@ -17,15 +17,11 @@ function createQueryClient() {
   });
 }
 
-export const getRouter = () => {
-  const queryClient = createQueryClient();
-
-  const router = createRouter({
+export function createAppRouter() {
+  return createRouter({
     routeTree,
-    context: { queryClient },
+    context: { queryClient: createQueryClient() },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
   });
-
-  return router;
-};
+}
