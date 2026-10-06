@@ -153,6 +153,16 @@ export const et = {
     needsSignature: "Vajab allkirja",
     defaultCategory: "Sisseelamine",
   },
+  notFound: {
+    title: "Lehte ei leitud",
+    text: "Otsitud lehte pole olemas või see on teise kohta viidud.",
+    home: "Avalehele",
+  },
+  errorPage: {
+    title: "Leht ei laadinud",
+    text: "Midagi läks valesti. Proovi lehte värskendada või mine avalehele.",
+    retry: "Proovi uuesti",
+  },
   errors: {
     generic: "Midagi läks valesti. Proovi uuesti.",
     invalidInput: "Kontrolli sisestatud andmeid.",

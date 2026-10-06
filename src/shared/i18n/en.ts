@@ -150,6 +150,16 @@ export const en: Dict = {
     needsSignature: "Needs signature",
     defaultCategory: "Onboarding",
   },
+  notFound: {
+    title: "Page not found",
+    text: "The page you're looking for doesn't exist or has been moved.",
+    home: "Go home",
+  },
+  errorPage: {
+    title: "This page didn't load",
+    text: "Something went wrong. You can try refreshing or head back home.",
+    retry: "Try again",
+  },
   errors: {
     generic: "Something went wrong. Please try again.",
     invalidInput: "Please check the values you entered.",
