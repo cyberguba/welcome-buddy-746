@@ -10,6 +10,12 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
  * Higher priority wins when a module matches several groups.
  */
 const LIBRARY_CHUNK_GROUPS = [
+  // Loaded on demand after start-up (see shared/lib/telemetry.ts), so it must not join "vendor".
+  {
+    name: "telemetry",
+    test: /node_modules[\\/](@microsoft|@nevware21)[\\/]/,
+    priority: 5,
+  },
   { name: "react", test: /node_modules[\\/](react|react-dom|scheduler)[\\/]/, priority: 4 },
   { name: "supabase", test: /node_modules[\\/]@supabase[\\/]/, priority: 3 },
   { name: "tanstack", test: /node_modules[\\/]@tanstack[\\/]/, priority: 2 },
